@@ -1,3 +1,4 @@
+import typer
 from funbuild.shell import run_shell
 from funutil import getLogger
 
@@ -7,11 +8,13 @@ logger = getLogger("funinstall")
 
 
 @app.command(name="go")
-def install_go(version=None) -> bool:
+def install_go(
+    version: str = typer.Option(None, "--version", "-v", help="Go 版本"),
+) -> bool:
     """
     使用一键脚本安装go
     https://github.com/Jrohy/go-install
-    :param version: Go 版本
+
     """
     run_shell("curl -L -o funinstall_go.sh https://go-install.netlify.app/install.sh")
     if version:
