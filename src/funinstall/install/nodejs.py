@@ -10,8 +10,8 @@ logger = getLogger("funinstall")
 @app.command(name="nodejs")
 def install_nodejs(
     version: str = typer.Option(None, "--version", "-v", help="nodejs 版本"),
-    lasted: bool = typer.Option(False, "--version", "-v", help="是否安装最新版本"),
-    update: bool = typer.Option(False, "--version", "-v", help="是否更新版本"),
+    lasted: bool = typer.Option(False, "-l", help="是否安装最新版本"),
+    update: bool = typer.Option(False, "-u", help="是否更新版本"),
 ) -> bool:
     """
     使用一键脚本安装nodeJs
