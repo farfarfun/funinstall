@@ -24,4 +24,5 @@ def install_go(
         run_shell("sudo bash funinstall_go.sh")
         logger.success("成功安装 Go")
     run_shell("rm funinstall_go.sh")
+    run_shell("sudo ln -fs /usr/local/go/bin/go /usr/local/bin/go")
     return True
