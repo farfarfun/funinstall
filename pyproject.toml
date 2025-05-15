@@ -1,0 +1,30 @@
+[project]
+name = "funinstall"
+version = "1.0.1"
+description = "funinstall"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [ "funbuild>=1.6.3", "funsecret>=1.4.56", "funutil>=1.0.50",]
+[[project.authors]]
+name = "牛哥"
+email = "niuliangtao@qq.com"
+
+[[project.authors]]
+name = "farfarfun"
+email = "farfarfun@qq.com"
+
+[[project.maintainers]]
+name = "牛哥"
+email = "niuliangtao@qq.com"
+
+[[project.maintainers]]
+name = "farfarfun"
+email = "farfarfun@qq.com"
+
+[project.urls]
+Organization = "https://github.com/farfarfun"
+Repository = "https://github.com/farfarfun/funinstall"
+Releases = "https://github.com/farfarfun/funinstall/releases"
+
+[tool.setuptools]
+license-files = []
