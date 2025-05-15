@@ -6,10 +6,12 @@ from .base import install_app as app
 logger = getLogger("funinstall")
 
 
-@app.command()
+@app.command(name="go")
 def install_go(version=None) -> bool:
     """
+    使用一键脚本安装go
     https://github.com/Jrohy/go-install
+    :param version: Go 版本
     """
     run_shell("curl -L -o funinstall_go.sh https://go-install.netlify.app/install.sh")
     if version:
