@@ -25,7 +25,7 @@ def install_go(
 
 
 @app.command(name="new-api")
-def install_new_api() -> bool:
+def install_newapi() -> bool:
     return NewApiInstall().install()
 
 
