@@ -1,4 +1,4 @@
-from .base import install_app
+from .command import app as install_app
 from .coder_server import install_code_server
 from .go import install_go
 from .new_api import install_newapi
