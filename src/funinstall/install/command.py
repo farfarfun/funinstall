@@ -1,7 +1,7 @@
 import typer
 from funutil import getLogger
 
-from .coder_server import CodeServerInstall
+from .code_server import CodeServerInstall
 from .go import GoInstall
 from .new_api import NewApiInstall
 from .nodejs import NodeJSInstall
@@ -13,7 +13,7 @@ app = typer.Typer()
 
 
 @app.command(name="code-server")
-def install_coder_server() -> bool:
+def install_code_server() -> bool:
     return CodeServerInstall().install()
 
 
