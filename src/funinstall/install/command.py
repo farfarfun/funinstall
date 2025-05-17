@@ -1,6 +1,8 @@
 import typer
 from funutil import getLogger
 
+
+from .brew import BrewInstall
 from .code_server import CodeServerInstall
 from .go import GoInstall
 from .new_api import NewApiInstall
@@ -35,4 +37,8 @@ def install_nodejs(
     lasted: bool = typer.Option(False, "--lasted", "-l", help="是否安装最新版本"),
     update: bool = typer.Option(False, "--update", "-u", help="是否更新版本"),
 ) -> bool:
-    return NodeJSInstall().install()
+    return NodeJSInstall(version=version, lasted=lasted, update=update).install()
+
+
+def install_brew(*args, **kwargs) -> bool:
+    return BrewInstall().install()
