@@ -7,6 +7,7 @@ from .code_server import CodeServerInstall
 from .go import GoInstall
 from .new_api import NewApiInstall
 from .nodejs import NodeJSInstall
+from .v2rayA import V2RayAInstall
 
 logger = getLogger("funinstall")
 
@@ -40,5 +41,11 @@ def install_nodejs(
     return NodeJSInstall(version=version, lasted=lasted, update=update).install()
 
 
+@app.command(name="brew")
 def install_brew(*args, **kwargs) -> bool:
     return BrewInstall().install()
+
+
+@app.command(name="v2rayA")
+def install_v2rayA(*args, **kwargs):
+    return V2RayAInstall(*args, **kwargs).install(*args, **kwargs)
