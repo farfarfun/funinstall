@@ -49,15 +49,15 @@ def install_brew(*args, **kwargs) -> bool:
 
 
 @app.command(name="v2rayA")
-def install_v2rayA(*args, **kwargs):
-    return V2RayAInstall(*args, **kwargs).install(*args, **kwargs)
+def install_v2rayA():
+    return V2RayAInstall().install()
 
 
 @app.command(name="frpc")
-def install_frpc(*args, **kwargs):
-    return FrpcInstall(*args, **kwargs).install(*args, **kwargs)
+def install_frpc():
+    return FrpcInstall().install()
 
 
 @app.command(name="uif")
-def install_uif(*args, **kwargs):
-    return UIFInstall(*args, **kwargs).install(*args, **kwargs)
+def install_uif():
+    return UIFInstall().install()
