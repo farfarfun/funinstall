@@ -9,6 +9,7 @@ from .new_api import NewApiInstall
 from .nodejs import NodeJSInstall
 from .v2rayA import V2RayAInstall
 from .frpc import FrpcInstall
+from .uif import UIFInstall
 
 logger = getLogger("funinstall")
 
@@ -55,3 +56,8 @@ def install_v2rayA(*args, **kwargs):
 @app.command(name="frpc")
 def install_frpc(*args, **kwargs):
     return FrpcInstall(*args, **kwargs).install(*args, **kwargs)
+
+
+@app.command(name="uif")
+def install_uif(*args, **kwargs):
+    return UIFInstall(*args, **kwargs).install(*args, **kwargs)
