@@ -1,6 +1,6 @@
 [project]
 name = "funinstall"
-version = "1.0.38"
+version = "1.0.39"
 description = "funinstall"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -31,3 +31,6 @@ funinstall = "funinstall.command:funinstall"
 
 [tool.setuptools]
 license-files = []
+
+[tool.uv]
+package = true
