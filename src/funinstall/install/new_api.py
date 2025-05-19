@@ -40,6 +40,7 @@ class NewApiInstall(BaseInstall):
             [
                 f"cd {newapi_root}/web",
                 "npm install",
+                'export NODE_OPTIONS="--max-old-space-size=8192"',
                 "npm run build",
             ]
         )
@@ -50,7 +51,7 @@ class NewApiInstall(BaseInstall):
                 "go mod download",
                 "cp .env.example .env",
                 "go build -o newapi.sh",
-                "./newapi.sh",
+                "bash ./newapi.sh",
             ]
         )
         return True

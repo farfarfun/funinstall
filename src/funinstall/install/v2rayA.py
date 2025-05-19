@@ -23,12 +23,8 @@ class V2RayAInstall(BaseInstall):
 
     def install_linux(self, *args, **kwargs) -> bool:
         """
-        使用一键脚本安装new-api
-        https://docs.newapi.pro/installation/local-development/#_6
+        https://v2raya.org/docs/prologue/installation/debian/
         """
-        """
-            https://v2raya.org/docs/prologue/installation/debian/
-            """
         logger.info("添加源")
         run_shell(
             "wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/keyrings/v2raya.asc"
