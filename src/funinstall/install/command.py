@@ -8,6 +8,7 @@ from .go import GoInstall
 from .new_api import NewApiInstall
 from .nodejs import NodeJSInstall
 from .v2rayA import V2RayAInstall
+from .frpc import FrpcInstall
 
 logger = getLogger("funinstall")
 
@@ -49,3 +50,8 @@ def install_brew(*args, **kwargs) -> bool:
 @app.command(name="v2rayA")
 def install_v2rayA(*args, **kwargs):
     return V2RayAInstall(*args, **kwargs).install(*args, **kwargs)
+
+
+@app.command(name="frpc")
+def install_frpc(*args, **kwargs):
+    return FrpcInstall(*args, **kwargs).install(*args, **kwargs)

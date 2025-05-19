@@ -18,15 +18,16 @@ class FrpcInstall(BaseInstall):
         run_shell(
             "curl -L -o funinstall_frpc.sh https://raw.githubusercontent.com/stilleshan/frpc/master/frpc_linux_install.sh"
         )
-        run_shell('chmod +x funinstall_frpc.sh')
+        run_shell("chmod +x funinstall_frpc.sh")
         run_shell("sudo bash funinstall_frpc.sh")
         run_shell("rm funinstall_frpc.sh")
         return True
+
     def uninstall_linux(self, *args, **kwargs) -> bool:
         run_shell(
             "curl -L -o funinstall_frpc.sh https://raw.githubusercontent.com/stilleshan/frpc/master/frpc_linux_uninstall.sh"
         )
-        run_shell('chmod +x funinstall_frpc.sh')
+        run_shell("chmod +x funinstall_frpc.sh")
         run_shell("sudo bash funinstall_frpc.sh")
         run_shell("rm funinstall_frpc.sh")
         return True

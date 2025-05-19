@@ -24,7 +24,6 @@ class BaseInstall:
             logger.error("无法识别当前系统")
             return False
 
-
     @abstractmethod
     def install_linux(self, *args, **kwargs) -> bool:
         pass
