@@ -5,7 +5,7 @@ from .brew import BrewInstall
 from .code_server import CodeServerInstall
 from .frpc import FrpcInstall
 from .go import GoInstall
-from .new_api import NewApiInstall
+from .newapi import NewApiInstall
 from .nodejs import NodeJSInstall
 from .onehub import OnehubInstall
 from .uif import UIFInstall
