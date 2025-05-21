@@ -1,18 +1,17 @@
 import typer
 from funutil import getLogger
 
-
 from .brew import BrewInstall
 from .code_server import CodeServerInstall
+from .frpc import FrpcInstall
 from .go import GoInstall
 from .new_api import NewApiInstall
 from .nodejs import NodeJSInstall
-from .v2rayA import V2RayAInstall
-from .frpc import FrpcInstall
+from .onehub import OnehubInstall
 from .uif import UIFInstall
+from .v2rayA import V2RayAInstall
 
 logger = getLogger("funinstall")
-
 
 app = typer.Typer()
 
@@ -61,3 +60,8 @@ def install_frpc():
 @app.command(name="uif")
 def install_uif():
     return UIFInstall().install()
+
+
+@app.command(name="onehub")
+def install_onehub():
+    return OnehubInstall().install()

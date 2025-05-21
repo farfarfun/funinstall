@@ -11,6 +11,10 @@ class GoInstall(BaseInstall):
         super().__init__(*args, **kwargs)
         self.version = version
 
+    def install_macos(self, *args, **kwargs) -> bool:
+        run_shell("brew install go")
+        return True
+
     def install_linux(self, *args, **kwargs) -> bool:
         """
         使用一键脚本安装go

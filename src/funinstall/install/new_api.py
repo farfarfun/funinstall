@@ -40,7 +40,7 @@ class NewApiInstall(BaseInstall):
             [
                 f"cd {newapi_root}/web",
                 "npm install",
-                'export NODE_OPTIONS="--max-old-space-size=8192"',
+                'export NODE_OPTIONS="--max-old-space-size=1024"',
                 "npm run build",
             ]
         )
@@ -55,3 +55,9 @@ class NewApiInstall(BaseInstall):
             ]
         )
         return True
+
+
+# funapi_onehub:Funapi_onehub@rm-6we4ow3inyh33c67y.mysql.japan.rds.aliyuncs.com:3306
+# "mysql+pymysql://funapi_onehub:Funapi_onehub@rm-6we4ow3inyh33c67ygo.mysql.japan.rds.aliyuncs.com:3306/funapi-onehub?charset=utf8mb4"
+
+# "funapi_onehub:Funapi_onehub@tcp(rm-6we4ow3inyh33c67ygo.mysql.japan.rds.aliyuncs.com:3306)/funapi-onehub"

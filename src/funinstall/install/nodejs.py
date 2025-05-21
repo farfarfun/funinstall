@@ -13,6 +13,10 @@ class NodeJSInstall(BaseInstall):
         self.lasted = lasted
         self.update = update
 
+    def install_macos(self, *args, **kwargs) -> bool:
+        run_shell("brew install nodejs")
+        return True
+
     def install_linux(self, *args, **kwargs) -> bool:
         """
         使用一键脚本安装new-api
