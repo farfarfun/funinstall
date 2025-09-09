@@ -1,10 +1,10 @@
 [project]
 name = "funinstall"
-version = "1.0.50"
+version = "1.0.51"
 description = "funinstall 快速安装一些开发工具"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = [ "funbuild>=1.6.3", "funsecret>=1.4.56", "funutil>=1.0.50",]
+dependencies = [ "funbuild>=1.6.3", "funsecret>=1.4.56", "funserver>=1.0.46", "funutil>=1.0.50",]
 [[project.authors]]
 name = "牛哥"
 email = "niuliangtao@qq.com"
@@ -28,6 +28,7 @@ Releases = "https://github.com/farfarfun/funinstall/releases"
 
 [project.scripts]
 funinstall = "funinstall.command:funinstall"
+funonehub = "funinstall.install.onehub:funonehub"
 
 [tool.setuptools]
 license-files = []
