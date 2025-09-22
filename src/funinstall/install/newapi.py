@@ -2,9 +2,9 @@ import os
 
 import requests
 from funbuild.shell import run_shell_list
+from funserver.servers.base.install import BaseInstall
 from funutil import getLogger
 
-from .base import BaseInstall
 
 logger = getLogger("funinstall")
 

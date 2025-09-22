@@ -7,9 +7,10 @@ from .frpc import FrpcInstall
 from .go import GoInstall
 from .newapi import NewApiInstall
 from .nodejs import NodeJSInstall
-from .onehub import OnehubInstall
+from .onehub import FunOneHub
 from .uif import UIFInstall
 from .v2rayA import V2RayAInstall
+from .ossutil import OSSUtilInstall
 
 logger = getLogger("funinstall")
 
@@ -64,4 +65,9 @@ def install_uif():
 
 @app.command(name="onehub")
 def install_onehub():
-    return OnehubInstall().install()
+    return FunOneHub().install()
+
+
+@app.command(name="ossutil")
+def install_ossutil():
+    return OSSUtilInstall().install()

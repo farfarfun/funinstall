@@ -1,13 +1,13 @@
 from funbuild.shell import run_shell
+from funserver.servers.base.install import BaseInstall
 from funutil import getLogger
 
-from .base import BaseInstall
 
 logger = getLogger("funinstall")
 
 
 class GoInstall(BaseInstall):
-    def __init__(self, version: str = None, *args, **kwargs):
+    def __init__(self, version: str = "", *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.version = version
 

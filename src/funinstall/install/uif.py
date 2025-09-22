@@ -1,7 +1,7 @@
 from funbuild.shell import run_shell
 from funutil import getLogger
 
-from .base import BaseInstall
+from funserver.servers.base.install import BaseInstall
 
 logger = getLogger("funinstall")
 
