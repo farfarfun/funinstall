@@ -25,8 +25,9 @@ def install_code_server() -> bool:
 @app.command(name="go")
 def install_go(
     version: str = typer.Option(None, "--version", "-v", help="Go 版本"),
+    force: bool = typer.Option(False, "--force", "-f", help="强制重新安装"),
 ) -> bool:
-    return GoInstall(version=version).install()
+    return GoInstall(version=version, force=force).install()
 
 
 @app.command(name="new-api")
@@ -39,8 +40,11 @@ def install_nodejs(
     version: str = typer.Option(None, "--version", "-v", help="nodejs 版本"),
     lasted: bool = typer.Option(False, "--lasted", "-l", help="是否安装最新版本"),
     update: bool = typer.Option(False, "--update", "-u", help="是否更新版本"),
+    force: bool = typer.Option(False, "--force", "-f", help="强制重新安装"),
 ) -> bool:
-    return NodeJSInstall(version=version, lasted=lasted, update=update).install()
+    return NodeJSInstall(
+        version=version, lasted=lasted, update=update, force=force
+    ).install()
 
 
 @app.command(name="brew")

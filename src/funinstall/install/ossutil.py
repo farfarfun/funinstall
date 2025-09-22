@@ -11,17 +11,50 @@ logger = getLogger("funinstall")
 
 
 class OSSUtilInstall(BaseInstall):
-    def __init__(self, version="2.1.2", *args, **kwargs):
+    def __init__(self, version="2.1.2", force=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.version = version
         self.base_url = "https://gosspublic.alicdn.com/ossutil/v2"
         self.install_path = "~/opt/bin/"
+        self.force = force
+
+    def is_installed(self) -> bool:
+        """
+        检查ossutil是否已安装
+        """
+        try:
+            # 检查系统路径中的ossutil
+            run_shell("ossutil version")
+            logger.info("检测到系统中已安装 ossutil")
+            return True
+        except:
+            pass
+
+        try:
+            # 检查自定义安装路径中的ossutil
+            install_path_expanded = os.path.expanduser(self.install_path)
+            ossutil_path = os.path.join(install_path_expanded, "ossutil")
+            if os.path.exists(ossutil_path):
+                run_shell(f"{ossutil_path} version")
+                logger.info(f"检测到 {ossutil_path} 中已安装 ossutil")
+                return True
+        except:
+            pass
+
+        return False
 
     def install_macos(self, *args, **kwargs) -> bool:
         """
         在macOS系统上安装ossutil
         支持x86_64和ARM64架构
         """
+        # 检查是否已安装
+        if not self.force and self.is_installed():
+            logger.info(
+                "ossutil 已安装，跳过安装。如需重新安装，请使用 force=True 参数"
+            )
+            return True
+
         try:
             # 检测架构
             arch = platform.machine().lower()
@@ -66,6 +99,13 @@ class OSSUtilInstall(BaseInstall):
         在Linux系统上安装ossutil
         支持x86_64、x86、ARM64、ARM32架构
         """
+        # 检查是否已安装
+        if not self.force and self.is_installed():
+            logger.info(
+                "ossutil 已安装，跳过安装。如需重新安装，请使用 force=True 参数"
+            )
+            return True
+
         try:
             # 检测架构
             arch = platform.machine().lower()
@@ -115,6 +155,13 @@ class OSSUtilInstall(BaseInstall):
         支持x86_64和x86架构
         注意：Windows安装需要手动配置环境变量
         """
+        # 检查是否已安装
+        if not self.force and self.is_installed():
+            logger.info(
+                "ossutil 已安装，跳过安装。如需重新安装，请使用 force=True 参数"
+            )
+            return True
+
         try:
             # 检测架构
             arch = platform.machine().lower()

@@ -14,47 +14,46 @@ pip install funinstall
 
 ## 功能特点
 
-- 简单的命令行界面，基于 Typer 构建
-- 支持多种开发工具的一键安装
-- 灵活的版本选择和配置选项
+- 🚀 **简单易用**: 基于 Typer 构建的直观命令行界面
+- 🔧 **多平台支持**: 支持 macOS、Linux、Windows 三大操作系统
+- 📦 **丰富工具**: 涵盖开发环境、开发工具、网络工具、API管理等多个类别
+- ⚡ **智能安装**: 自动检测系统架构和已安装软件，避免重复安装
+- 🎯 **版本控制**: 支持指定版本安装和版本更新
+- 🛡️ **安全可靠**: 从官方源下载，确保软件安全性
 
 ## 支持的安装工具
 
-### Go 语言
+| 类别 | 工具名称 | 安装命令 | 说明 | macOS | Linux | Windows |
+|------|----------|----------|------|-------|-------|---------|
+| **开发环境** | Go 语言 | `funinstall install go` | Go 语言开发环境 | ✅ | ✅ | ✅ |
+| | NodeJS | `funinstall install nodejs` | NodeJS 开发环境 | ✅ | ✅ | ✅ |
+| | Homebrew | `funinstall install brew` | macOS 包管理器 | ✅ | ❌ | ❌ |
+| **开发工具** | Code Server | `funinstall install code-server` | 基于 Web 的 VS Code 服务器 | ✅ | ✅ | ❌ |
+| | OSS工具 | `funinstall install ossutil` | 阿里云对象存储命令行工具 | ✅ | ✅ | ✅ |
+| **网络工具** | V2rayA | `funinstall install v2rayA` | 网络代理工具 | ✅ | ✅ | ❌ |
+| | FRP客户端 | `funinstall install frpc` | 内网穿透工具 | ✅ | ✅ | ❌ |
+| **API管理** | New API | `funinstall install new-api` | 接口管理工具 | ✅ | ✅ | ✅ |
+| | OneHub | `funinstall install onehub` | API 网关工具 | ✅ | ✅ | ✅ |
+| **其他工具** | UIF | `funinstall install uif` | 通用工具 | ✅ | ✅ | ❌ |
 
-一键安装 Go 语言环境：
-
-```bash
-funinstall install go [--version VERSION]
-```
-
-### NodeJS
-
-一键安装 NodeJS 环境：
-
-```bash
-funinstall install nodejs [--version VERSION] [--lasted] [--update]
-```
-
-选项说明：
-- `--version/-v`: 指定安装的 NodeJS 版本
-- `--lasted/-l`: 安装最新版本
-- `--update/-u`: 更新当前版本
-
-### Code Server
-
-安装 Code Server：
+### 使用示例
 
 ```bash
-funinstall install code-server
-```
+# 安装 Go 语言环境
+funinstall install go
 
-### 其他工具
+# 安装指定版本的 NodeJS
+funinstall install nodejs --version 18.17.0
 
-查看所有可用的安装命令：
+# 安装最新版本的 NodeJS
+funinstall install nodejs --lasted
 
-```bash
+# 安装阿里云 OSS 工具
+funinstall install ossutil
+
+# 查看所有可用命令
 funinstall --help
+funinstall install --help
 ```
 
 ## 开发
