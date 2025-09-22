@@ -1,3 +1,4 @@
+from .command import OSSUtilInstall
 from .command import app as install_app
 from .command import (
     install_brew,
@@ -13,6 +14,7 @@ from .command import (
 )
 
 __all__ = [
+    "OSSUtilInstall",
     "install_app",
     "install_brew",
     "install_code_server",

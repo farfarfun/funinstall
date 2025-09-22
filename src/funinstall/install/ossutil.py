@@ -27,8 +27,8 @@ class OSSUtilInstall(BaseInstall):
             run_shell("ossutil version")
             logger.info("检测到系统中已安装 ossutil")
             return True
-        except:
-            pass
+        except Exception as e:
+            logger.error(f"error:{e}")
 
         try:
             # 检查自定义安装路径中的ossutil
@@ -38,8 +38,8 @@ class OSSUtilInstall(BaseInstall):
                 run_shell(f"{ossutil_path} version")
                 logger.info(f"检测到 {ossutil_path} 中已安装 ossutil")
                 return True
-        except:
-            pass
+        except Exception as e:
+            logger.error(f"error:{e}")
 
         return False
 
