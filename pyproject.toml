@@ -1,6 +1,6 @@
 [project]
 name = "funinstall"
-version = "1.0.56"
+version = "1.0.57"
 description = "funinstall 快速安装一些开发工具"
 readme = "README.md"
 requires-python = ">=3.9"
