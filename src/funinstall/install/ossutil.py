@@ -15,6 +15,7 @@ class OSSUtilInstall(BaseInstall):
         super().__init__(*args, **kwargs)
         self.version = version
         self.base_url = "https://gosspublic.alicdn.com/ossutil/v2"
+        self.install_path = "~/opt/bin/"
 
     def install_macos(self, *args, **kwargs) -> bool:
         """
@@ -41,12 +42,11 @@ class OSSUtilInstall(BaseInstall):
             folder_name = f"ossutil-{self.version}-mac-{arch_suffix}"
             # 下载和安装
             commands = [
-                "mkdir ~/opt/bin",
+                f"mkdir {self.install_path}",
                 f"curl -o {filename} {download_url}",
                 f"unzip {filename}",
-                f"cd {folder_name} && chmod 755 ossutil && mv ossutil ~/opt/bin/",
+                f"cd {folder_name} && chmod 755 ossutil && mv ossutil {self.install_path}",
                 f"cd .. && rm -rf {filename} {folder_name}",
-                # "sudo ln -sf ~/opt/bin/ossutil /usr/bin/ossutil",
             ]
 
             for cmd in commands:
@@ -54,7 +54,7 @@ class OSSUtilInstall(BaseInstall):
 
             # 验证安装
             run_shell("ossutil version")
-            logger.success(f"成功安装 ossutil {self.version} 到 ~/opt/bin")
+            logger.success(f"成功安装 ossutil {self.version} 到 {self.install_path}")
             return True
 
         except Exception as e:
@@ -90,10 +90,10 @@ class OSSUtilInstall(BaseInstall):
             folder_name = f"ossutil-{self.version}-linux-{arch_suffix}"
             # 下载和安装
             commands = [
-                "mkdir -p ~/opt/bin",
+                f"mkdir -p {self.install_path}",
                 f"curl -o {filename} {download_url}",
                 f"unzip {filename}",
-                f"cd {folder_name} && chmod 755 ossutil && mv ossutil ~/opt/bin/",
+                f"cd {folder_name} && chmod 755 ossutil && mv ossutil {self.install_path}/",
                 f"cd .. && rm -rf {filename} {folder_name}",
             ]
 
@@ -101,8 +101,8 @@ class OSSUtilInstall(BaseInstall):
                 run_shell(cmd)
 
             # 验证安装
-            run_shell("~/opt/bin/ossutil version")
-            logger.success(f"成功安装 ossutil {self.version} 到 ~/opt/bin")
+            run_shell(f"{self.install_path}/ossutil version")
+            logger.success(f"成功安装 ossutil {self.version} 到 {self.install_path}")
             return True
 
         except Exception as e:
@@ -131,7 +131,7 @@ class OSSUtilInstall(BaseInstall):
             download_url = f"{self.base_url}/{self.version}/{filename}"
 
             # Windows安装目录
-            install_dir = os.path.expanduser("~/opt/bin")
+            install_dir = os.path.expanduser(f"{self.install_path}")
 
             logger.info(f"开始下载 ossutil {self.version} for Windows {arch_suffix}")
             logger.info(f"安装目录: {install_dir}")
