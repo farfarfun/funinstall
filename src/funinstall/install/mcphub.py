@@ -30,6 +30,10 @@ class FunMcpHub(BaseServer):
         super().__init__(server_name="funmcphub", port=8802)
         self.overwrite = overwrite
 
+    @property
+    def run_path(self):
+        return f"{os.environ['HOME']}/opt/mcp-hub"
+
     def update(self, args=None, **kwargs):
         """通过 pip 更新 funserver 依赖。"""
         logger.info("正在更新 funserver 依赖")
@@ -46,7 +50,7 @@ class FunMcpHub(BaseServer):
         Args:
             device: 安装目标标识（预留参数，当前未区分平台）。
         """
-        root = f"{os.environ.get('HOME')}/opt/mcp-hub"
+        root = self.run_path
         if not os.path.exists(root):
             logger.info(f"安装目录 {root} 不存在，正在创建")
             os.makedirs(root, exist_ok=True)
