@@ -2,7 +2,7 @@ import os
 from typing import Optional
 
 import requests
-from funshell import run_shell_list
+from funshell import run_shell_list, kill_process
 from nltlog import getLogger
 
 from funserver.servers.base import BaseServer, server_parser
@@ -17,6 +17,9 @@ class FunOneHub(BaseServer):
 
     def update(self, args=None, **kwargs):
         run_shell_list(["pip install -U funserver"])
+
+    def stop(*args, **kwargs):
+        kill_process("one-hub")
 
     def run_cmd(self, *args, **kwargs) -> Optional[str]:
         root = f"{os.environ['HOME']}/opt/one-hub"
