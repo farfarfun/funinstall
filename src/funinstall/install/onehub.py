@@ -7,7 +7,7 @@ from nltlog import getLogger
 
 from funserver.servers.base import BaseServer, server_parser
 
-logger = getLogger("fun-onehub")
+logger = getLogger("funinstall")
 
 
 class FunOneHub(BaseServer):
