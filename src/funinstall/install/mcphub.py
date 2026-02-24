@@ -37,12 +37,8 @@ class FunMcpHub(BaseServer):
 
     def run_cmd(self, *args, **kwargs) -> Optional[str]:
         """返回 MCP Hub 的启动命令。"""
-        root = f"{os.environ['HOME']}/opt/mcp-hub"
-        if not os.path.exists(root):
-            logger.warning(f"安装目录不存在: {root}")
-            return None
         logger.debug("MCP Hub 启动命令: mcphub")
-        return f"cd {root} && mcphub"
+        return "mcphub"
 
     def _install(self, device="mcp-hub", *args, **kwargs) -> bool:
         """通过 npm 全局安装 MCP Hub。
