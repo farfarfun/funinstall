@@ -12,14 +12,11 @@ logger = getLogger("funinstall")
 
 class FunOneHub(BaseServer):
     def __init__(self, overwrite: bool = False, *args, **kwargs):
-        super().__init__(server_name="funonehub")
+        super().__init__(server_name="funonehub", port=8801)
         self.overwrite = overwrite
 
     def update(self, args=None, **kwargs):
         run_shell_list(["pip install -U funserver"])
-
-    def stop(*args, **kwargs):
-        kill_process(port=3000, name="one-hub")
 
     def run_cmd(self, *args, **kwargs) -> Optional[str]:
         root = f"{os.environ['HOME']}/opt/one-hub"
