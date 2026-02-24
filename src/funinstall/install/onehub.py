@@ -37,6 +37,10 @@ class FunOneHub(BaseServer):
         logger.info("正在更新 funserver 依赖")
         run_shell_list(["pip install -U funserver"])
 
+    @property
+    def run_path(self):
+        return f"{os.environ['HOME']}/opt/one-hub"
+
     def run_cmd(self, *args, **kwargs) -> Optional[str]:
         """构建 OneHub 的启动命令。
 
