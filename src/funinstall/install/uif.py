@@ -1,4 +1,4 @@
-from funbuild.shell import run_shell
+from funshell import run_shell
 from funutil import getLogger
 
 from funserver.servers.base.install import BaseInstall
