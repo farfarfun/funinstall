@@ -37,7 +37,7 @@ class FunMcpHub(BaseServer):
 
     def run_cmd(self, *args, **kwargs) -> Optional[str]:
         """返回 MCP Hub 的启动命令。"""
-        root = f"{os.environ['HOME']}/opt/one-hub"
+        root = f"{os.environ['HOME']}/opt/mcp-hub"
         if not os.path.exists(root):
             logger.warning(f"安装目录不存在: {root}")
             return None
