@@ -19,11 +19,7 @@ class FunMcpHub(BaseServer):
         run_shell_list(["pip install -U funserver"])
 
     def run_cmd(self, *args, **kwargs) -> Optional[str]:
-        root = f"{os.environ['HOME']}/opt/mcp-hub"
-        if not os.path.exists(root):
-            logger.warning(f"{root} not exists")
-            return None
-        return f"mcphub"
+        return "mcphub"
 
     def _install(self, device="mcp-hub", *args, **kwargs) -> bool:
         root = f"{os.environ.get('HOME')}/opt/mcp-hub"
