@@ -1,5 +1,5 @@
 import typer
-from funutil import getLogger
+from nltlog import getLogger
 
 from .brew import BrewInstall
 from .code_server import CodeServerInstall

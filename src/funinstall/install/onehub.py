@@ -3,7 +3,7 @@ from typing import Optional
 
 import requests
 from funshell import run_shell_list
-from funutil import getLogger
+from nltlog import getLogger
 
 from funserver.servers.base import BaseServer, server_parser
 
