@@ -2,7 +2,7 @@ import os
 from typing import Optional
 
 import requests
-from funshell import run_shell_list, kill_process
+from funshell import run_shell_list
 from nltlog import getLogger
 
 from funserver.servers.base import BaseServer, server_parser
@@ -23,7 +23,7 @@ class FunMcpHub(BaseServer):
         if not os.path.exists(root):
             logger.warning(f"{root} not exists")
             return None
-        return f"{root}/mcphub"
+        return f"mcphub"
 
     def _install(self, device="mcp-hub", *args, **kwargs) -> bool:
         root = f"{os.environ.get('HOME')}/opt/mcp-hub"

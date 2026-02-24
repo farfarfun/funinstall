@@ -5,8 +5,11 @@ from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
 from nltlog import getLogger
 
+from .utils import check_command, run_script_from_url
 
 logger = getLogger("funinstall")
+
+_SKIP_MSG = "Go 已安装，跳过安装。如需重新安装，请使用 force=True 参数"
 
 
 class GoInstall(BaseInstall):
@@ -16,100 +19,66 @@ class GoInstall(BaseInstall):
         self.force = force
 
     def is_installed(self) -> bool:
-        """
-        检查Go是否已安装
-        """
-        try:
-            # 检查系统路径中的go
-            run_shell("go version")
-            logger.info("检测到系统中已安装 Go")
-            return True
-        except:
-            pass
-
-        return False
+        return check_command("go version", "Go")
 
     def install_macos(self, *args, **kwargs) -> bool:
-        # 检查是否已安装
         if not self.force and self.is_installed():
-            logger.info("Go 已安装，跳过安装。如需重新安装，请使用 force=True 参数")
+            logger.info(_SKIP_MSG)
             return True
-
         run_shell("brew install go")
         return True
 
     def install_linux(self, *args, **kwargs) -> bool:
-        """
-        使用一键脚本安装go
-        https://github.com/Jrohy/go-install
-        """
-        # 检查是否已安装
+        """https://github.com/Jrohy/go-install"""
         if not self.force and self.is_installed():
-            logger.info("Go 已安装，跳过安装。如需重新安装，请使用 force=True 参数")
+            logger.info(_SKIP_MSG)
             return True
 
-        run_shell(
-            "curl -L -o funinstall_go.sh https://go-install.netlify.app/install.sh"
+        version_args = f"-v {self.version}" if self.version else ""
+        run_script_from_url(
+            "https://go-install.netlify.app/install.sh",
+            script_name="funinstall_go.sh",
+            args=version_args,
         )
-        if self.version:
-            run_shell(f"sudo bash funinstall_go.sh -v {self.version}")
-            logger.success(f"成功安装 Go {self.version}")
-        else:
-            run_shell("sudo bash funinstall_go.sh")
-            logger.success("成功安装 Go")
-        run_shell("rm funinstall_go.sh")
+        logger.success(f"成功安装 Go {self.version or ''}")
         run_shell("sudo ln -fs /usr/local/go/bin/go /usr/local/bin/go")
         return True
 
     def install_windows(self, *args, **kwargs) -> bool:
-        """
-        在Windows系统上安装Go语言
-        使用官方安装包进行安装
-        """
-        # 检查是否已安装
         if not self.force and self.is_installed():
-            logger.info("Go 已安装，跳过安装。如需重新安装，请使用 force=True 参数")
+            logger.info(_SKIP_MSG)
             return True
 
         try:
-            # 检测架构
             arch = platform.machine().lower()
-            if arch in ["amd64", "x86_64"]:
-                arch_suffix = "amd64"
-            elif arch in ["i386", "i686", "x86"]:
-                arch_suffix = "386"
-            else:
+            arch_suffix = {
+                "amd64": "amd64",
+                "x86_64": "amd64",
+                "i386": "386",
+                "i686": "386",
+                "x86": "386",
+            }.get(arch)
+            if not arch_suffix:
                 logger.error(f"不支持的架构: {arch}")
                 return False
 
-            # 如果没有指定版本，使用默认版本
-            version = self.version if self.version else "1.21.0"
-
-            # 构建下载URL
+            version = self.version or "1.21.0"
             filename = f"go{version}.windows-{arch_suffix}.msi"
             download_url = f"https://golang.org/dl/{filename}"
-
-            logger.info(f"开始下载 Go {version} for Windows {arch_suffix}")
-
-            # Windows安装目录
             install_dir = os.path.expanduser("~/Downloads")
 
-            # 下载安装包
-            commands = [
+            logger.info(f"开始下载 Go {version} for Windows {arch_suffix}")
+            for cmd in [
                 f'powershell -Command "Invoke-WebRequest -Uri {download_url} -OutFile {install_dir}\\{filename}"',
                 f"powershell -Command \"Start-Process msiexec.exe -Wait -ArgumentList '/i {install_dir}\\{filename} /quiet'\"",
                 f'powershell -Command "Remove-Item {install_dir}\\{filename}"',
-            ]
-
-            for cmd in commands:
+            ]:
                 run_shell(cmd)
 
             logger.success(f"成功安装 Go {version}")
             logger.info("请重新打开命令行窗口以使环境变量生效")
             return True
-
         except Exception as e:
             logger.error(f"安装 Go 失败: {e}")
-            logger.info("Windows安装失败，请手动下载安装:")
-            logger.info("下载地址: https://golang.org/dl/")
+            logger.info("Windows安装失败，请手动下载安装: https://golang.org/dl/")
             return False

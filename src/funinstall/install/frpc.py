@@ -1,9 +1,6 @@
-from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
-from nltlog import getLogger
 
-
-logger = getLogger("funinstall")
+from .utils import run_script_from_url
 
 
 class FrpcInstall(BaseInstall):
@@ -12,22 +9,18 @@ class FrpcInstall(BaseInstall):
         self.version = version
 
     def install_linux(self, *args, **kwargs) -> bool:
-        """
-        https://github.com/farfarfun/funfrp/tree/master/src/funfrp/frpc
-        """
-        run_shell(
-            "curl -L -o funinstall_frpc.sh https://raw.githubusercontent.com/stilleshan/frpc/master/frpc_linux_install.sh"
+        """https://github.com/farfarfun/funfrp/tree/master/src/funfrp/frpc"""
+        run_script_from_url(
+            "https://raw.githubusercontent.com/stilleshan/frpc/master/frpc_linux_install.sh",
+            script_name="funinstall_frpc.sh",
+            chmod=True,
         )
-        run_shell("chmod +x funinstall_frpc.sh")
-        run_shell("sudo bash funinstall_frpc.sh")
-        run_shell("rm funinstall_frpc.sh")
         return True
 
     def uninstall_linux(self, *args, **kwargs) -> bool:
-        run_shell(
-            "curl -L -o funinstall_frpc.sh https://raw.githubusercontent.com/stilleshan/frpc/master/frpc_linux_uninstall.sh"
+        run_script_from_url(
+            "https://raw.githubusercontent.com/stilleshan/frpc/master/frpc_linux_uninstall.sh",
+            script_name="funinstall_frpc.sh",
+            chmod=True,
         )
-        run_shell("chmod +x funinstall_frpc.sh")
-        run_shell("sudo bash funinstall_frpc.sh")
-        run_shell("rm funinstall_frpc.sh")
         return True

@@ -1,22 +1,17 @@
-from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
 from nltlog import getLogger
 
+from .utils import run_script_from_url
 
 logger = getLogger("funinstall")
 
 
 class CodeServerInstall(BaseInstall):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def install_linux(self, *args, **kwargs) -> bool:
-        """
-        使用一键脚本安装code-server
-        https://github.com/coder/code-server
-        """
-        run_shell("curl -L -o funinstall_cs.sh https://code-server.dev/install.sh")
-        run_shell("sudo bash funinstall_cs.sh")
+        """https://github.com/coder/code-server"""
+        run_script_from_url(
+            "https://code-server.dev/install.sh",
+            script_name="funinstall_cs.sh",
+        )
         logger.success("成功安装 code-server")
-        run_shell("rm funinstall_cs.sh")
         return True
