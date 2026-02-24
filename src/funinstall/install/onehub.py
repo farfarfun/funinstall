@@ -19,7 +19,7 @@ class FunOneHub(BaseServer):
         run_shell_list(["pip install -U funserver"])
 
     def stop(*args, **kwargs):
-        kill_process("one-hub")
+        kill_process(port=3000, name="one-hub")
 
     def run_cmd(self, *args, **kwargs) -> Optional[str]:
         root = f"{os.environ['HOME']}/opt/one-hub"
