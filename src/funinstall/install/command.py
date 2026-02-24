@@ -11,6 +11,7 @@ from .onehub import FunOneHub
 from .uif import UIFInstall
 from .v2rayA import V2RayAInstall
 from .ossutil import OSSUtilInstall
+from .mcphub import FunMcpHub
 
 logger = getLogger("funinstall")
 
@@ -60,6 +61,11 @@ def install_v2rayA():
 @app.command(name="frpc")
 def install_frpc():
     return FrpcInstall().install()
+
+
+@app.command(name="mcphub")
+def install_mcphub():
+    return FunMcpHub().install()
 
 
 @app.command(name="uif")

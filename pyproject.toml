@@ -1,6 +1,6 @@
 [project]
 name = "funinstall"
-version = "1.0.71"
+version = "1.0.72"
 description = "funinstall 快速安装一些开发工具"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -29,6 +29,7 @@ Releases = "https://github.com/farfarfun/funinstall/releases"
 [project.scripts]
 funinstall = "funinstall.command:funinstall"
 funonehub = "funinstall.install.onehub:funonehub"
+funmcphub = "funinstall.install.mcphub:funmcphub"
 
 [tool.setuptools]
 license-files = []
