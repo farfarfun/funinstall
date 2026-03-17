@@ -5,7 +5,7 @@ new-api 是 OpenAI API 的管理与分发系统，支持多平台部署。
 参考: https://github.com/QuantumNous/new-api
 """
 
-from __future__ import annotations
+from funserver.servers.base import BaseServer, server_parser
 
 import os
 
@@ -17,7 +17,7 @@ from nltlog import getLogger
 logger = getLogger("funinstall")
 
 
-class NewApiInstall(BaseInstall):
+class FunNewApi(BaseInstall):
     """new-api 安装器，从 GitHub Releases 下载对应平台的可执行文件。
 
     Args:
@@ -38,7 +38,8 @@ class NewApiInstall(BaseInstall):
         logger.info(f"正在从 {url} 获取最新版本信息")
         response = requests.get(url).json()
         assets = {
-            asset["name"]: asset["browser_download_url"] for asset in response["assets"]
+            asset["name"]: asset["browser_download_url"] + "-" + response["name"]
+            for asset in response["assets"]
         }
         logger.debug(f"获取到 {len(assets)} 个资产文件")
         return assets
@@ -69,14 +70,20 @@ class NewApiInstall(BaseInstall):
     def install_linux(self, *args, **kwargs) -> bool:
         """在 Linux 上安装 new-api。"""
         logger.info("开始在 Linux 上安装 new-api")
-        return self._install("one-api", *args, **kwargs)
+        return self._install("new-api", *args, **kwargs)
 
     def install_macos(self, *args, **kwargs) -> bool:
         """在 macOS 上安装 new-api。"""
         logger.info("开始在 macOS 上安装 new-api")
-        return self._install("one-api-macos", *args, **kwargs)
+        return self._install("new-api-macos", *args, **kwargs)
 
     def install_windows(self, *args, **kwargs) -> bool:
         """在 Windows 上安装 new-api。"""
         logger.info("开始在 Windows 上安装 new-api")
-        return self._install("one-api.exe", *args, **kwargs)
+        return self._install("new-api.exe", *args, **kwargs)
+
+
+def funnewapi():
+    """funnewapi CLI 入口函数，由 pyproject.toml [project.scripts] 调用。"""
+    app = server_parser(FunNewApi())
+    app()
