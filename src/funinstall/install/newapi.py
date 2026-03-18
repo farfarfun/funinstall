@@ -60,7 +60,7 @@ class FunNewApi(BaseServer):
         if not os.path.exists(executable):
             logger.warning(f"可执行文件不存在: {executable}")
             return None
-        cmd = f'cd "{root}" && "{executable}"'
+        cmd = executable
         logger.debug(f"new-api 启动命令: {cmd}")
         return cmd
 
