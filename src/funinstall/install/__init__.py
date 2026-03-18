@@ -20,7 +20,7 @@ from .code_server import CodeServerInstall
 from .frpc import FrpcInstall
 from .go import GoInstall
 from .mcphub import FunMcpHub
-from .newapi import NewApiInstall
+from .newapi import FunNewApi
 from .nodejs import NodeJSInstall
 from .onehub import FunOneHub
 from .ossutil import OSSUtilInstall
@@ -35,7 +35,7 @@ __all__ = [
     "FunMcpHub",
     "FunOneHub",
     "GoInstall",
-    "NewApiInstall",
+    "FunNewApi",
     "NodeJSInstall",
     "OSSUtilInstall",
     "UIFInstall",
