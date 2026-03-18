@@ -8,7 +8,7 @@ from .code_server import CodeServerInstall
 from .frpc import FrpcInstall
 from .go import GoInstall
 from .mcphub import FunMcpHub
-from .newapi import NewApiInstall
+from .newapi import FunNewApi
 from .nodejs import NodeJSInstall
 from .onehub import FunOneHub
 from .ossutil import OSSUtilInstall
@@ -41,7 +41,7 @@ def install_go(
 def install_newapi() -> bool:
     """安装 new-api。"""
     logger.info("开始安装 new-api")
-    return NewApiInstall().install()
+    return FunNewApi().install()
 
 
 @app.command(name="nodejs", help="安装 Node.js 运行环境")
