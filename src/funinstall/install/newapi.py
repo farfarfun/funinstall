@@ -30,7 +30,7 @@ class FunNewApi(BaseServer):
     """
 
     def __init__(self, overwrite: bool = False, *args, **kwargs):
-        super().__init__(server_name="funnewapi", port=8806, *args, **kwargs)
+        super().__init__(server_name="funnewapi", port=8801, *args, **kwargs)
         self.overwrite = overwrite
 
     @property
