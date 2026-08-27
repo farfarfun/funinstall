@@ -1,6 +1,6 @@
 [project]
 name = "funinstall"
-version = "1.0.91"
+version = "1.0.92"
 description = "funinstall 快速安装一些开发工具"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -31,6 +31,10 @@ funinstall = "funinstall.command:funinstall"
 funonehub = "funinstall.install.onehub:funonehub"
 funmcphub = "funinstall.install.mcphub:funmcphub"
 funnewapi = "funinstall.install.newapi:funnewapi"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.setuptools]
 license-files = []
