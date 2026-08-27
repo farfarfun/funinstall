@@ -7,7 +7,7 @@ import os.path
 
 from funshell import run_shell_list
 from funserver.servers.base import BaseServer, server_parser
-from nltlog import getLogger
+from farlog import getLogger
 
 logger = getLogger("funinstall")
 

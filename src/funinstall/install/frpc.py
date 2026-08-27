@@ -6,7 +6,7 @@ frpc 是 frp 项目的客户端，用于将内网服务暴露到公网。
 """
 
 from funserver.servers.base.install import BaseInstall
-from nltlog import getLogger
+from farlog import getLogger
 
 from .utils import run_script_from_url
 

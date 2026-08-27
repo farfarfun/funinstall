@@ -1,7 +1,7 @@
 """安装工具模块，提供脚本下载执行和命令检测等通用工具函数。"""
 
 from funshell import run_shell
-from nltlog import getLogger
+from farlog import getLogger
 
 logger = getLogger("funinstall")
 

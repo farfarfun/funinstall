@@ -6,7 +6,7 @@ code-server 是基于浏览器的 VS Code，支持远程开发。
 """
 
 from funserver.servers.base.install import BaseInstall
-from nltlog import getLogger
+from farlog import getLogger
 
 from .utils import run_script_from_url
 

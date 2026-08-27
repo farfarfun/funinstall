@@ -1,7 +1,7 @@
 """install 子命令组，将各工具的安装逻辑注册为 typer 命令。"""
 
 import typer
-from nltlog import getLogger
+from farlog import getLogger
 
 from .brew import BrewInstall
 from .code_server import CodeServerInstall

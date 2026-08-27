@@ -9,7 +9,7 @@ import os
 from typing import Optional
 
 from funshell import run_shell_list
-from nltlog import getLogger
+from farlog import getLogger
 
 from funserver.servers.base import BaseServer, server_parser
 

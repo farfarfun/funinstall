@@ -10,7 +10,7 @@ import platform
 
 from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
-from nltlog import getLogger
+from farlog import getLogger
 
 from .utils import check_command, run_script_from_url
 
