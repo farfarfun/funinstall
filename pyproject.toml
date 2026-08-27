@@ -37,3 +37,6 @@ license-files = []
 
 [tool.uv]
 package = true
+
+[dependency-groups]
+dev = [ "pytest>=7.0",]
