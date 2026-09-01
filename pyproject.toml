@@ -4,7 +4,7 @@ version = "1.0.92"
 description = "funinstall 快速安装一些开发工具"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [ "funsecret>=1.4.84", "funserver>=1.0.59", "funshell>=1.0.5", "farlog>=1.1.7", "requests",]
+dependencies = [ "funserver>=1.0.59", "funshell>=1.0.5", "farlog>=1.1.7", "requests",]
 [[project.authors]]
 name = "牛哥"
 email = "niuliangtao@qq.com"
