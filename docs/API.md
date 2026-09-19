@@ -247,7 +247,7 @@ def install_platform(self, *args, **kwargs) -> bool:
 使用统一的日志记录格式：
 
 ```python
-from funutil import getLogger
+from farlog import getLogger
 
 logger = getLogger("funinstall")
 
@@ -278,9 +278,9 @@ logger.warning("检测到潜在问题")
 import os
 import platform
 
-from funbuild.shell import run_shell
+from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
-from funutil import getLogger
+from farlog import getLogger
 
 logger = getLogger("funinstall")
 

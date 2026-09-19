@@ -34,6 +34,6 @@ c.LabApp.port = 8765
 # c.NotebookApp.contents_manager_class = 'notedown.NotedownContentsManager'
 # 指定notebook服务的目录（缺省为运行jupyter命令时用户所在的目录，注意此目录不能为隐藏目录）
 
-# 设定password，不如上面介绍的命令行方便，需要用程序生成密码的hash值黏贴于此处
-# c.NotebookApp.password = u'123456'
-# c.NotebookApp.password = u'sha1:fff5261476d4:425ef465b8ab0172ef0e9c723ff3f5661c0a261f'
+# 如需设定密码，请勿在此硬编码明文或哈希值：
+# 用 `python3 -c "from jupyter_server.auth import passwd; print(passwd())"` 生成哈希，
+# 再通过 funsecret 或环境变量注入，不要提交到版本库。

@@ -4,7 +4,8 @@ version = "1.0.92"
 description = "funinstall 快速安装一些开发工具"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [ "funserver>=1.0.59", "funshell>=1.0.5", "farlog>=1.1.7", "requests",]
+license = "MIT"
+dependencies = [ "funserver>=1.0.59", "funshell>=1.0.5", "farlog>=1.1.7", "requests>=2.31.0",]
 [[project.authors]]
 name = "牛哥"
 email = "niuliangtao@qq.com"
@@ -37,7 +38,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.setuptools]
-license-files = []
+license-files = ["LICENSE"]
 
 [tool.uv]
 package = true

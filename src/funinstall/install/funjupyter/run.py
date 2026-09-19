@@ -42,8 +42,5 @@ class FunJupyter(BaseServer):
 
 def funjupyter():
     """funjupyter CLI 入口函数。"""
-    server = FunJupyter()
-    parser = server_parser(server)
-    args = parser.parse_args()
-    params = vars(args)
-    args.func(**params)
+    app = server_parser(FunJupyter())
+    app()

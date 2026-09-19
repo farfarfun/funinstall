@@ -46,7 +46,7 @@ funinstall install go
 funinstall install nodejs --version 18.17.0
 
 # 安装最新版本的 NodeJS
-funinstall install nodejs --lasted
+funinstall install nodejs --latest
 
 # 安装阿里云 OSS 工具
 funinstall install ossutil
@@ -60,10 +60,11 @@ funinstall install --help
 
 ### 依赖项
 
-- Python >= 3.9
-- funbuild >= 1.6.3
-- funsecret >= 1.4.56
-- funutil >= 1.0.50
+- Python >= 3.10
+- funserver >= 1.0.59
+- funshell >= 1.0.5
+- farlog >= 1.1.7
+- requests >= 2.31.0
 
 ### 贡献
 
@@ -71,4 +72,17 @@ funinstall install --help
 
 ## 许可证
 
-本项目采用 [LICENSE](LICENSE) 许可证。
+本项目基于 [MIT](LICENSE) 协议开源。
+
+---
+
+## 关于 farfarfun
+
+[farfarfun](https://github.com/farfarfun) 是一个专注于实用工具库的开源组织，
+涵盖云存储、数据处理、AI、多媒体与开发工具链等方向。
+
+- 🏠 组织主页：<https://github.com/farfarfun>
+- 📦 PyPI：<https://pypi.org/user/niuliangtao/>
+- 📧 联系：farfarfun@qq.com
+
+本项目基于 [MIT](LICENSE) 协议开源。

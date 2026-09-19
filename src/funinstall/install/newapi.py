@@ -8,7 +8,6 @@ new-api 是 OpenAI API 的管理与分发系统，支持多平台部署。
 
 import os
 import platform
-from typing import Optional
 
 import requests
 from funshell import run_shell_list
@@ -23,7 +22,7 @@ class FunNewApi(BaseServer):
     """new-api 安装器与服务管理器。
 
     继承自 BaseServer，同时提供安装和运行管理功能。
-    默认端口 8806，服务名 funnewapi。
+    默认端口 8801，服务名 funnewapi。
 
     Args:
         overwrite: 是否覆盖已有安装。
@@ -37,7 +36,7 @@ class FunNewApi(BaseServer):
     def run_path(self):
         return f"{os.environ['HOME']}/opt/new-api"
 
-    def run_cmd(self, *args, **kwargs) -> Optional[str]:
+    def run_cmd(self, *args, **kwargs) -> str | None:
         """构建 new-api 的启动命令。
 
         Returns:
@@ -113,7 +112,7 @@ class FunNewApi(BaseServer):
             )
         )
 
-    def _install(self, system: Optional[str] = None, *args, **kwargs) -> bool:
+    def _install(self, system: str | None = None, *args, **kwargs) -> bool:
         """下载并安装指定平台的 new-api 可执行文件。
 
         Args:

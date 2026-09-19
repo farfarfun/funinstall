@@ -7,7 +7,6 @@ OneHub 是一个 API 聚合管理平台（MartialBE/one-hub 的二次开发）�
 """
 
 import os
-from typing import Optional
 
 import requests
 from funshell import run_shell_list
@@ -41,7 +40,7 @@ class FunOneHub(BaseServer):
     def run_path(self):
         return f"{os.environ['HOME']}/opt/one-hub"
 
-    def run_cmd(self, *args, **kwargs) -> Optional[str]:
+    def run_cmd(self, *args, **kwargs) -> str | None:
         """构建 OneHub 的启动命令。
 
         Returns:

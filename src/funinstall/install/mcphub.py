@@ -6,7 +6,6 @@ MCP Hub 通过 npm 全局安装 @samanhappy/mcphub 包。
 """
 
 import os
-from typing import Optional
 
 from funshell import run_shell_list
 from farlog import getLogger
@@ -20,7 +19,7 @@ class FunMcpHub(BaseServer):
     """MCP Hub 安装器与服务管理器。
 
     继承自 BaseServer，同时提供安装和运行管理功能。
-    默认端口 3000，服务名 funmcphub。
+    默认端口 8802，服务名 funmcphub。
 
     Args:
         overwrite: 是否覆盖已有安装。
@@ -39,7 +38,7 @@ class FunMcpHub(BaseServer):
         logger.info("正在更新 funserver 依赖")
         run_shell_list(["pip install -U funserver"])
 
-    def run_cmd(self, *args, **kwargs) -> Optional[str]:
+    def run_cmd(self, *args, **kwargs) -> str | None:
         """返回 MCP Hub 的启动命令。"""
         logger.debug("MCP Hub 启动命令: mcphub")
         return "mcphub"

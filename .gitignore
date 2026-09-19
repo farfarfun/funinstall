@@ -62,6 +62,12 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+# 组织规范要求覆盖的数据库/压缩包/运行时/日志产物
+*.db
+*.rar
+.run/
+logs/
+
 # Flask stuff:
 instance/
 .webassets-cache

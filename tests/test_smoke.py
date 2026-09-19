@@ -15,7 +15,6 @@ requests.get / os.makedirs 等函数打桩，只验证“调用链路正确”�
 
 from unittest.mock import MagicMock, patch
 
-import pytest
 from typer.testing import CliRunner
 
 runner = CliRunner()
@@ -363,8 +362,9 @@ def test_utils_check_command_no_real_execution():
 
 
 # ---------------------------------------------------------------------------
-# 5. funjupyter 子模块：未在 [project.scripts] 注册，且其 funjupyter() 入口
-#    调用了 typer.Typer 对象上不存在的 parse_args()，属于既有 bug，非本次范围。
+# 5. funjupyter 子模块：未在 [project.scripts] 注册，供 funinstall 内部复用。
+#    历史上 funjupyter() 曾调用 typer.Typer 对象上不存在的 parse_args()，必然
+#    崩溃；现已改为与 funonehub/funmcphub/funnewapi 一致的 app() 调用方式。
 # ---------------------------------------------------------------------------
 
 
@@ -377,11 +377,14 @@ def test_funjupyter_server_construct(tmp_path, monkeypatch):
     assert "jupyter lab" in cmd
 
 
-def test_funjupyter_cli_entry_has_known_bug():
-    """funjupyter() 调用 server_parser(...) 返回的 typer.Typer 对象的 .parse_args()，
-    但 typer.Typer 并未实现 argparse 风格的 parse_args 接口，这是既有代码缺陷。
-    这里不修复该 bug（超出冒烟测试范围），仅跳过并记录。"""
-    pytest.skip(
-        "funinstall.install.funjupyter.run.funjupyter() 存在既有 bug："
-        "对 typer.Typer 应用调用不存在的 parse_args()，且未注册为 CLI 入口，跳过"
-    )
+def test_funjupyter_cli_entry_help():
+    """funjupyter() 内部构造的 typer app 应能正常响应 --help，不再复现历史上
+    调用不存在的 parse_args() 导致的崩溃。"""
+    from funinstall.install.funjupyter.run import FunJupyter
+    from funserver.servers.base import server_parser
+
+    with patch("os.makedirs"):
+        server = FunJupyter()
+    app = server_parser(server)
+    result = runner.invoke(app, ["--help"])
+    assert result.exit_code == 0
