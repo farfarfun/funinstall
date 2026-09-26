@@ -27,20 +27,20 @@ class FunOneHub(BaseServer):
         overwrite: 是否覆盖已有安装。
     """
 
-    def __init__(self, overwrite: bool = False, *args, **kwargs):
+    def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None:
         super().__init__(server_name="funonehub", port=8801)
         self.overwrite = overwrite
 
-    def update(self, args=None, **kwargs):
+    def update(self, args: object | None = None, **kwargs: object) -> None:
         """通过 pip 更新 funserver 依赖。"""
         logger.info("正在更新 funserver 依赖")
         run_shell_list(["pip install -U funserver"])
 
     @property
-    def run_path(self):
+    def run_path(self) -> str:
         return f"{os.environ['HOME']}/opt/one-hub"
 
-    def run_cmd(self, *args, **kwargs) -> str | None:
+    def run_cmd(self, *args: object, **kwargs: object) -> str | None:
         """构建 OneHub 的启动命令。
 
         Returns:
@@ -71,7 +71,9 @@ class FunOneHub(BaseServer):
         logger.debug(f"获取到 {len(assets)} 个资产文件")
         return assets
 
-    def _install(self, device="one-api", *args, **kwargs) -> bool:
+    def _install(
+        self, device: str = "one-api", *args: object, **kwargs: object
+    ) -> bool:
         """下载并安装指定平台的 OneHub 可执行文件。
 
         Args:
@@ -94,23 +96,23 @@ class FunOneHub(BaseServer):
         logger.success(f"成功安装 OneHub 到 {root}")
         return True
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """在 Linux 上安装 OneHub。"""
         logger.info("开始在 Linux 上安装 OneHub")
         return self._install("one-api", *args, **kwargs)
 
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """在 macOS 上安装 OneHub。"""
         logger.info("开始在 macOS 上安装 OneHub")
         return self._install("one-api-macos", *args, **kwargs)
 
-    def install_windows(self, *args, **kwargs) -> bool:
+    def install_windows(self, *args: object, **kwargs: object) -> bool:
         """在 Windows 上安装 OneHub。"""
         logger.info("开始在 Windows 上安装 OneHub")
         return self._install("one-api.exe", *args, **kwargs)
 
 
-def funonehub():
+def funonehub() -> None:
     """funonehub CLI 入口函数，由 pyproject.toml [project.scripts] 调用。"""
     app = server_parser(FunOneHub())
     app()

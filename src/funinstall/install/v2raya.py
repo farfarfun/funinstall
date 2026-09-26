@@ -21,13 +21,20 @@ class V2RayAInstall(BaseInstall):
         update: 是否更新已有版本（预留参数，当前未使用）。
     """
 
-    def __init__(self, version=None, lasted=False, update=False, *args, **kwargs):
+    def __init__(
+        self,
+        version: str | None = None,
+        lasted: bool = False,
+        update: bool = False,
+        *args: object,
+        **kwargs: object,
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.version = version
         self.lasted = lasted
         self.update = update
 
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """通过 Homebrew 在 macOS 上安装 v2rayA 并启动服务。"""
         logger.info("开始在 macOS 上安装 v2rayA")
         logger.info("添加 v2rayA 的 Homebrew Tap")
@@ -39,7 +46,7 @@ class V2RayAInstall(BaseInstall):
         logger.success("成功在 macOS 上安装 v2rayA")
         return True
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """通过 apt 在 Debian/Ubuntu 上安装 v2rayA 并配置开机自启动。"""
         logger.info("开始在 Linux 上安装 v2rayA")
         logger.info("添加 v2rayA 的 GPG 公钥和 APT 源")

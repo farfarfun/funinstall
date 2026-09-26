@@ -11,7 +11,7 @@
     - OneHub
     - ossutil
     - UIF
-    - v2rayA
+    - v2raya
 """
 
 from .command import app as install_app
@@ -25,7 +25,7 @@ from .nodejs import NodeJSInstall
 from .onehub import FunOneHub
 from .ossutil import OSSUtilInstall
 from .uif import UIFInstall
-from .v2rayA import V2RayAInstall
+from .v2raya import V2RayAInstall
 
 __all__ = [
     "install_app",

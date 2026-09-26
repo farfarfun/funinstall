@@ -8,6 +8,6 @@ app = typer.Typer(help="funinstall — 快速安装常用开发工具的命令�
 app.add_typer(install_app, name="install", help="安装开发工具（go、nodejs、brew 等）")
 
 
-def funinstall():
+def funinstall() -> None:
     """CLI 主入口函数，由 pyproject.toml [project.scripts] 调用。"""
     app()

@@ -48,7 +48,7 @@ def test_import_all_submodules():
     import funinstall.install.ossutil
     import funinstall.install.uif
     import funinstall.install.utils
-    import funinstall.install.v2rayA
+    import funinstall.install.v2raya
 
     # 确认 install 包对外暴露的公开类均可访问
     from funinstall.install import (
@@ -171,7 +171,7 @@ def test_ossutil_install_construct():
 
 
 def test_v2raya_install_construct():
-    from funinstall.install.v2rayA import V2RayAInstall
+    from funinstall.install.v2raya import V2RayAInstall
 
     installer = V2RayAInstall()
     assert installer.version is None
@@ -277,9 +277,9 @@ def test_uif_install_linux_is_mocked():
 
 
 def test_v2raya_install_linux_is_mocked():
-    from funinstall.install.v2rayA import V2RayAInstall
+    from funinstall.install.v2raya import V2RayAInstall
 
-    with patch("funinstall.install.v2rayA.run_shell") as mock_run_shell:
+    with patch("funinstall.install.v2raya.run_shell") as mock_run_shell:
         assert V2RayAInstall().install_linux() is True
     assert mock_run_shell.called
 

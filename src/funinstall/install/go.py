@@ -27,7 +27,9 @@ class GoInstall(BaseInstall):
         force: 为 True 时即使已安装也会重新安装。
     """
 
-    def __init__(self, version: str = "", force=False, *args, **kwargs):
+    def __init__(
+        self, version: str = "", force: bool = False, *args: object, **kwargs: object
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.version = version
         self.force = force
@@ -36,7 +38,7 @@ class GoInstall(BaseInstall):
         """检查系统中是否已安装 Go。"""
         return check_command("go version", "Go")
 
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """通过 Homebrew 在 macOS 上安装 Go。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)
@@ -46,7 +48,7 @@ class GoInstall(BaseInstall):
         logger.success("成功在 macOS 上安装 Go")
         return True
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """通过一键脚本在 Linux 上安装 Go。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)
@@ -66,7 +68,7 @@ class GoInstall(BaseInstall):
         )
         return True
 
-    def install_windows(self, *args, **kwargs) -> bool:
+    def install_windows(self, *args: object, **kwargs: object) -> bool:
         """通过官方 MSI 安装包在 Windows 上安装 Go。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)

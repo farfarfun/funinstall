@@ -13,7 +13,7 @@ from .nodejs import NodeJSInstall
 from .onehub import FunOneHub
 from .ossutil import OSSUtilInstall
 from .uif import UIFInstall
-from .v2rayA import V2RayAInstall
+from .v2raya import V2RayAInstall
 
 logger = getLogger("funinstall")
 
@@ -69,8 +69,8 @@ def install_brew() -> bool:
     return BrewInstall().install()
 
 
-@app.command(name="v2rayA", help="安装 v2rayA 代理客户端")
-def install_v2rayA() -> bool:
+@app.command(name="v2raya", help="安装 v2rayA 代理客户端")
+def install_v2raya() -> bool:
     """安装 v2rayA。"""
     logger.info("开始安装 v2rayA")
     return V2RayAInstall().install()

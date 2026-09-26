@@ -9,7 +9,7 @@ funinstall 是一个简单易用的工具包，用于一键安装各种开发工
 ## 安装
 
 ```bash
-pip install funinstall
+uv tool install funinstall
 ```
 
 ## 功能特点
@@ -30,7 +30,7 @@ pip install funinstall
 | | Homebrew | `funinstall install brew` | macOS 包管理器 | ✅ | ❌ | ❌ |
 | **开发工具** | Code Server | `funinstall install code-server` | 基于 Web 的 VS Code 服务器 | ✅ | ✅ | ❌ |
 | | OSS工具 | `funinstall install ossutil` | 阿里云对象存储命令行工具 | ✅ | ✅ | ✅ |
-| **网络工具** | V2rayA | `funinstall install v2rayA` | 网络代理工具 | ✅ | ✅ | ❌ |
+| **网络工具** | V2rayA | `funinstall install v2raya` | 网络代理工具 | ✅ | ✅ | ❌ |
 | | FRP客户端 | `funinstall install frpc` | 内网穿透工具 | ✅ | ✅ | ❌ |
 | **API管理** | New API | `funinstall install new-api` | 接口管理工具 | ✅ | ✅ | ✅ |
 | | OneHub | `funinstall install onehub` | API 网关工具 | ✅ | ✅ | ✅ |

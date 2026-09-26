@@ -28,15 +28,15 @@ class FunNewApi(BaseServer):
         overwrite: 是否覆盖已有安装。
     """
 
-    def __init__(self, overwrite: bool = False, *args, **kwargs):
+    def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None:
         super().__init__(server_name="funnewapi", port=8801, *args, **kwargs)
         self.overwrite = overwrite
 
     @property
-    def run_path(self):
+    def run_path(self) -> str:
         return f"{os.environ['HOME']}/opt/new-api"
 
-    def run_cmd(self, *args, **kwargs) -> str | None:
+    def run_cmd(self, *args: object, **kwargs: object) -> str | None:
         """构建 new-api 的启动命令。
 
         Returns:
@@ -112,7 +112,9 @@ class FunNewApi(BaseServer):
             )
         )
 
-    def _install(self, system: str | None = None, *args, **kwargs) -> bool:
+    def _install(
+        self, system: str | None = None, *args: object, **kwargs: object
+    ) -> bool:
         """下载并安装指定平台的 new-api 可执行文件。
 
         Args:
@@ -142,23 +144,23 @@ class FunNewApi(BaseServer):
         logger.success(f"成功安装 new-api 到 {root}")
         return True
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """在 Linux 上安装 new-api。"""
         logger.info("开始在 Linux 上安装 new-api")
         return self._install("Linux", *args, **kwargs)
 
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """在 macOS 上安装 new-api。"""
         logger.info("开始在 macOS 上安装 new-api")
         return self._install("Darwin", *args, **kwargs)
 
-    def install_windows(self, *args, **kwargs) -> bool:
+    def install_windows(self, *args: object, **kwargs: object) -> bool:
         """在 Windows 上安装 new-api。"""
         logger.info("开始在 Windows 上安装 new-api")
         return self._install("Windows", *args, **kwargs)
 
 
-def funnewapi():
+def funnewapi() -> None:
     """funnewapi CLI 入口函数，由 pyproject.toml [project.scripts] 调用。"""
     app = server_parser(FunNewApi())
     app()

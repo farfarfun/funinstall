@@ -8,7 +8,7 @@ funinstall 是一个用于快速安装各种开发工具和环境的Python包。
 
 ### 系统要求
 
-- Python >= 3.9
+- Python >= 3.10
 - Git
 - 支持的操作系统：macOS、Linux、Windows
 
@@ -20,19 +20,13 @@ funinstall 是一个用于快速安装各种开发工具和环境的Python包。
    cd funinstall
    ```
 
-2. **创建虚拟环境**
+2. **创建环境并安装依赖**
    ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # Linux/macOS
-   # 或
-   .venv\Scripts\activate     # Windows
+   uv venv
+   uv sync
    ```
 
-3. **安装依赖**
-   ```bash
-   pip install -e .
-   pip install -r requirements-dev.txt  # 如果存在开发依赖
-   ```
+运行测试：`uv run pytest tests/`。
 
 ## 项目结构
 
@@ -56,7 +50,7 @@ funinstall/
 │           ├── onehub.py           # OneHub安装
 │           ├── ossutil.py          # OSS工具安装
 │           ├── uif.py              # UIF工具安装
-│           └── v2rayA.py           # V2rayA安装
+│           └── v2raya.py           # V2rayA安装
 ├── docs/                           # 文档目录
 │   ├── API.md                      # API文档
 │   ├── CHANGELOG.md                # 变更日志
@@ -277,10 +271,9 @@ class TestGoInstall(unittest.TestCase):
 
 ### 发布流程
 
-1. **更新版本号**
+1. **使用 funbuild 更新版本、构建并校验**
    ```bash
-   # 在 pyproject.toml 中更新版本号
-   version = "1.0.55"
+   uv run funbuild build
    ```
 
 2. **更新变更日志**
@@ -288,17 +281,13 @@ class TestGoInstall(unittest.TestCase):
    # 在 docs/CHANGELOG.md 中记录变更
    ```
 
-3. **创建Git标签**
+3. **发布**
    ```bash
-   git tag v1.0.55
-   git push origin v1.0.55
+   uv run funbuild publish
    ```
 
-4. **发布到PyPI**
-   ```bash
-   python -m build
-   python -m twine upload dist/*
-   ```
+版本递增、构建检查、发布和标签由 `funbuild` 统一处理；发布前先更新
+`CHANGELOG.md`，并确认测试、工作树和发布凭据均符合要求。
 
 ## 贡献指南
 
