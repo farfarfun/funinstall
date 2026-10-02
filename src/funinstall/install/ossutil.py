@@ -9,9 +9,10 @@ from __future__ import annotations
 import os
 import platform
 
-from funshell import run_shell
-from funserver.servers.base.install import BaseInstall
 from farlog import getLogger
+from funget import download
+from funserver.servers.base.install import BaseInstall
+from funshell import run_shell
 
 from .utils import check_command
 
@@ -39,7 +40,13 @@ class OSSUtilInstall(BaseInstall):
         force: 为 True 时即使已安装也会重新安装。
     """
 
-    def __init__(self, version="2.1.2", force=False, *args, **kwargs):
+    def __init__(
+        self,
+        version: str = "2.1.2",
+        force: bool = False,
+        *args: object,
+        **kwargs: object,
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.version = version
         self.base_url = "https://gosspublic.alicdn.com/ossutil/v2"
@@ -72,9 +79,11 @@ class OSSUtilInstall(BaseInstall):
 
         logger.info(f"开始下载 ossutil {self.version} for {os_name} {arch_suffix}")
         logger.info(f"下载地址: {download_url}")
+        run_shell(f"mkdir -p {self.install_path}")
+        if not download(url=download_url, filepath=filename, overwrite=True):
+            logger.error(f"下载 ossutil 失败: {download_url}")
+            return False
         for cmd in [
-            f"mkdir -p {self.install_path}",
-            f"curl -o {filename} {download_url}",
             f"unzip {filename}",
             f"cd {folder_name} && chmod 755 ossutil && mv ossutil {self.install_path}/",
             f"cd .. && rm -rf {filename} {folder_name}",
@@ -84,7 +93,7 @@ class OSSUtilInstall(BaseInstall):
         logger.success(f"成功安装 ossutil {self.version} 到 {self.install_path}")
         return True
 
-    def _resolve_arch(self, arch_map: dict) -> str | None:
+    def _resolve_arch(self, arch_map: dict[str, str]) -> str | None:
         """根据架构映射表解析当前系统的架构后缀。
 
         Args:
@@ -101,7 +110,7 @@ class OSSUtilInstall(BaseInstall):
             logger.debug(f"检测到架构: {arch} -> {suffix}")
         return suffix
 
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """在 macOS 上安装 ossutil。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)
@@ -116,7 +125,7 @@ class OSSUtilInstall(BaseInstall):
             logger.error(f"安装 ossutil 失败: {e}")
             return False
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """在 Linux 上安装 ossutil，额外支持 ARM32 架构。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)
@@ -137,7 +146,7 @@ class OSSUtilInstall(BaseInstall):
             logger.error(f"安装 ossutil 失败: {e}")
             return False
 
-    def install_windows(self, *args, **kwargs) -> bool:
+    def install_windows(self, *args: object, **kwargs: object) -> bool:
         """在 Windows 上安装 ossutil，安装后需手动配置 PATH 环境变量。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)

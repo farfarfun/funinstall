@@ -278,7 +278,7 @@ class TestGoInstall(unittest.TestCase):
 
 2. **更新变更日志**
    ```bash
-   # 在 docs/CHANGELOG.md 中记录变更
+   # 在根目录 CHANGELOG.md 中记录变更
    ```
 
 3. **发布**

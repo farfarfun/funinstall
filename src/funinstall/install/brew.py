@@ -4,8 +4,8 @@
 参考: https://gitee.com/ineo6/homebrew-install
 """
 
-from funserver.servers.base.install import BaseInstall
 from farlog import getLogger
+from funserver.servers.base.install import BaseInstall
 
 from .utils import run_script_from_url
 
@@ -15,12 +15,12 @@ logger = getLogger("funinstall")
 class BrewInstall(BaseInstall):
     """Homebrew 安装器，通过远程脚本在 macOS 上安装 Homebrew。"""
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """Linux 暂不支持 Homebrew 安装。"""
         logger.warning("Homebrew 安装暂不支持 Linux 平台")
         return False
 
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """通过 ineo6 镜像脚本在 macOS 上安装 Homebrew。"""
         logger.info("开始在 macOS 上安装 Homebrew")
         run_script_from_url(

@@ -10,10 +10,10 @@ import os
 import platform
 
 import requests
-from funshell import run_shell_list
 from farlog import getLogger
-
+from funget import download
 from funserver.servers.base import BaseServer, server_parser
+from funshell import run_shell_list
 
 logger = getLogger("funinstall")
 
@@ -28,7 +28,9 @@ class FunNewApi(BaseServer):
         overwrite: 是否覆盖已有安装。
     """
 
-    def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None:
+    def __init__(
+        self, overwrite: bool = False, *args: object, **kwargs: object
+    ) -> None:
         super().__init__(server_name="funnewapi", port=8801, *args, **kwargs)
         self.overwrite = overwrite
 
@@ -82,7 +84,7 @@ class FunNewApi(BaseServer):
         system = system.lower()
 
         def pick(predicate):
-            matches = [name for name in assets.keys() if predicate(name)]
+            matches = [name for name in assets if predicate(name)]
             if not matches:
                 raise KeyError(
                     f"未找到匹配的安装包资产: system={system}, assets={list(assets.keys())}"
@@ -132,15 +134,12 @@ class FunNewApi(BaseServer):
         logger.info(f"正在下载 {asset_name}: {download_url}")
 
         output_name = "new-api.exe" if sys_name.lower() == "windows" else "new-api"
-        run_shell_list(
-            [
-                f"cd {root}",
-                f"curl -L -o {output_name} {download_url}",
-                f"chmod u+x {output_name}"
-                if output_name != "new-api.exe"
-                else "echo skip chmod on windows",
-            ]
-        )
+        output_path = f"{root}/{output_name}"
+        if not download(url=download_url, filepath=output_path, overwrite=True):
+            logger.error(f"下载 new-api 失败: {download_url}")
+            return False
+        if output_name != "new-api.exe":
+            run_shell_list([f"chmod u+x {output_path}"])
         logger.success(f"成功安装 new-api 到 {root}")
         return True
 

@@ -9,10 +9,10 @@ OneHub 是一个 API 聚合管理平台（MartialBE/one-hub 的二次开发）�
 import os
 
 import requests
-from funshell import run_shell_list
 from farlog import getLogger
-
+from funget import download
 from funserver.servers.base import BaseServer, server_parser
+from funshell import run_shell_list
 
 logger = getLogger("funinstall")
 
@@ -27,7 +27,9 @@ class FunOneHub(BaseServer):
         overwrite: 是否覆盖已有安装。
     """
 
-    def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None:
+    def __init__(
+        self, overwrite: bool = False, *args: object, **kwargs: object
+    ) -> None:
         super().__init__(server_name="funonehub", port=8801)
         self.overwrite = overwrite
 
@@ -85,14 +87,12 @@ class FunOneHub(BaseServer):
             os.makedirs(root, exist_ok=True)
 
         download_url = self.get_download_url()[device]
+        output_path = f"{root}/one-api"
         logger.info(f"正在下载 {device}: {download_url}")
-        run_shell_list(
-            [
-                f"cd {root}",
-                f"curl -L -o one-api {download_url}",
-                "chmod u+x one-api",
-            ]
-        )
+        if not download(url=download_url, filepath=output_path, overwrite=True):
+            logger.error(f"下载 OneHub 失败: {download_url}")
+            return False
+        run_shell_list([f"chmod u+x {output_path}"])
         logger.success(f"成功安装 OneHub 到 {root}")
         return True
 

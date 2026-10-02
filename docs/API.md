@@ -296,7 +296,8 @@ class NewToolInstall(BaseInstall):
             run_shell("newtool --version")
             logger.info("检测到系统中已安装 NewTool")
             return True
-        except:
+        except Exception as e:
+            logger.debug(f"未检测到 NewTool，探测命令执行失败: {e}")
             return False
 
     def install_macos(self, *args, **kwargs) -> bool:

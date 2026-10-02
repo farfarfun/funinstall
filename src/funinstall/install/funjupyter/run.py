@@ -5,9 +5,9 @@
 
 import os.path
 
-from funshell import run_shell_list
-from funserver.servers.base import BaseServer, server_parser
 from farlog import getLogger
+from funserver.servers.base import BaseServer, server_parser
+from funshell import run_shell_list
 
 logger = getLogger("funinstall")
 
@@ -18,15 +18,15 @@ class FunJupyter(BaseServer):
     使用同目录下的 config.py 作为 JupyterLab 配置文件启动。
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(server_name="funjupyter")
 
-    def update(self, args=None, **kwargs):
+    def update(self, args: object | None = None, **kwargs: object) -> None:
         """通过 pip 更新 JupyterLab 到最新版本。"""
         logger.info("正在更新 JupyterLab")
         run_shell_list(["pip install -U jupyterlab"])
 
-    def run_cmd(self, *args, **kwargs):
+    def run_cmd(self, *args: object, **kwargs: object) -> str:
         """构建 JupyterLab 的启动命令，使用内置配置文件。
 
         Returns:
@@ -40,7 +40,7 @@ class FunJupyter(BaseServer):
         return cmd
 
 
-def funjupyter():
+def funjupyter() -> None:
     """funjupyter CLI 入口函数。"""
     app = server_parser(FunJupyter())
     app()

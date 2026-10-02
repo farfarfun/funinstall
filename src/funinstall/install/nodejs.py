@@ -8,9 +8,9 @@
 import os
 import platform
 
-from funshell import run_shell
-from funserver.servers.base.install import BaseInstall
 from farlog import getLogger
+from funserver.servers.base.install import BaseInstall
+from funshell import run_shell
 
 from .utils import check_command, run_script_from_url
 
@@ -30,8 +30,14 @@ class NodeJSInstall(BaseInstall):
     """
 
     def __init__(
-        self, version=None, lasted=False, update=False, force=False, *args, **kwargs
-    ):
+        self,
+        version: str | None = None,
+        lasted: bool = False,
+        update: bool = False,
+        force: bool = False,
+        *args: object,
+        **kwargs: object,
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.version = version
         self.latest = lasted
@@ -42,7 +48,7 @@ class NodeJSInstall(BaseInstall):
         """检查系统中是否已安装 Node.js。"""
         return check_command("node --version", "NodeJS")
 
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """通过 Homebrew 在 macOS 上安装 Node.js。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)
@@ -52,7 +58,7 @@ class NodeJSInstall(BaseInstall):
         logger.success("成功在 macOS 上安装 NodeJS")
         return True
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """通过一键脚本在 Linux 上安装 Node.js。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)
@@ -81,7 +87,7 @@ class NodeJSInstall(BaseInstall):
         )
         return True
 
-    def install_windows(self, *args, **kwargs) -> bool:
+    def install_windows(self, *args: object, **kwargs: object) -> bool:
         """通过官方 MSI 安装包在 Windows 上安装 Node.js。"""
         if not self.force and self.is_installed():
             logger.info(_SKIP_MSG)
