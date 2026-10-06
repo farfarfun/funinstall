@@ -12,7 +12,7 @@ from farlog import getLogger
 from funserver.servers.base.install import BaseInstall
 from funshell import run_shell
 
-from .utils import check_command, run_script_from_url
+from .utils import check_command, ensure_command_succeeds, run_script_from_url
 
 logger = getLogger("funinstall")
 
@@ -54,7 +54,8 @@ class NodeJSInstall(BaseInstall):
             logger.info(_SKIP_MSG)
             return True
         logger.info("通过 brew 安装 NodeJS")
-        run_shell("brew install nodejs")
+        command = "brew install nodejs"
+        ensure_command_succeeds(run_shell(command), command)
         logger.success("成功在 macOS 上安装 NodeJS")
         return True
 
@@ -118,7 +119,7 @@ class NodeJSInstall(BaseInstall):
                 f"powershell -Command \"Start-Process msiexec.exe -Wait -ArgumentList '/i {install_dir}\\{filename} /quiet'\"",
                 f'powershell -Command "Remove-Item {install_dir}\\{filename}"',
             ]:
-                run_shell(cmd)
+                ensure_command_succeeds(run_shell(cmd), cmd)
 
             logger.success(f"成功安装 NodeJS {version}")
             logger.info("请重新打开命令行窗口以使环境变量生效")

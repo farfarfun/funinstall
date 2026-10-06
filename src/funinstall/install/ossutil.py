@@ -14,7 +14,7 @@ from funget import download
 from funserver.servers.base.install import BaseInstall
 from funshell import run_shell
 
-from .utils import check_command
+from .utils import check_command, ensure_command_succeeds
 
 logger = getLogger("funinstall")
 
@@ -79,7 +79,8 @@ class OSSUtilInstall(BaseInstall):
 
         logger.info(f"开始下载 ossutil {self.version} for {os_name} {arch_suffix}")
         logger.info(f"下载地址: {download_url}")
-        run_shell(f"mkdir -p {self.install_path}")
+        command = f"mkdir -p {self.install_path}"
+        ensure_command_succeeds(run_shell(command), command)
         if not download(url=download_url, filepath=filename, overwrite=True):
             logger.error(f"下载 ossutil 失败: {download_url}")
             return False
@@ -88,7 +89,7 @@ class OSSUtilInstall(BaseInstall):
             f"cd {folder_name} && chmod 755 ossutil && mv ossutil {self.install_path}/",
             f"cd .. && rm -rf {filename} {folder_name}",
         ]:
-            run_shell(cmd)
+            ensure_command_succeeds(run_shell(cmd), cmd)
 
         logger.success(f"成功安装 ossutil {self.version} 到 {self.install_path}")
         return True
@@ -173,7 +174,7 @@ class OSSUtilInstall(BaseInstall):
                 f'powershell -Command "Remove-Item {filename}"',
                 f'powershell -Command "Remove-Item {folder_name} -Recurse"',
             ]:
-                run_shell(cmd)
+                ensure_command_succeeds(run_shell(cmd), cmd)
 
             logger.success(f"成功安装 ossutil {self.version} 到 {install_dir}")
             logger.info(f"请手动将 {install_dir} 添加到系统环境变量 PATH 中")

@@ -12,6 +12,8 @@ from farlog import getLogger
 
 from funserver.servers.base import BaseServer, server_parser
 
+from .utils import ensure_command_succeeds
+
 logger = getLogger("funinstall")
 
 
@@ -57,7 +59,8 @@ class FunMcpHub(BaseServer):
             os.makedirs(root, exist_ok=True)
 
         logger.info("通过 npm 全局安装 @samanhappy/mcphub")
-        run_shell_list(["npm install -g @samanhappy/mcphub"])
+        command = "npm install -g @samanhappy/mcphub"
+        ensure_command_succeeds(run_shell_list([command]), command)
         logger.success("成功安装 MCP Hub")
         return True
 

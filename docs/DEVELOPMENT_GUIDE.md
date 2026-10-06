@@ -8,7 +8,7 @@ funinstall 是一个用于快速安装各种开发工具和环境的Python包。
 
 ### 系统要求
 
-- Python >= 3.10
+- Python >= 3.12
 - Git
 - 支持的操作系统：macOS、Linux、Windows
 
@@ -36,7 +36,6 @@ funinstall/
 │   └── funinstall/
 │       ├── __init__.py
 │       ├── command.py              # 主命令入口
-│       ├── common/                 # 公共模块
 │       └── install/                # 安装模块
 │           ├── __init__.py
 │           ├── command.py          # 安装命令定义
@@ -46,16 +45,15 @@ funinstall/
 │           ├── go.py               # Go语言安装
 │           ├── newapi.py           # New API安装
 │           ├── nodejs.py           # NodeJS安装
-│           ├── oneapi.py           # One API安装
 │           ├── onehub.py           # OneHub安装
 │           ├── ossutil.py          # OSS工具安装
 │           ├── uif.py              # UIF工具安装
 │           └── v2raya.py           # V2rayA安装
 ├── docs/                           # 文档目录
 │   ├── API.md                      # API文档
-│   ├── CHANGELOG.md                # 变更日志
 │   └── DEVELOPMENT_GUIDE.md        # 开发指南
 ├── tests/                          # 测试目录
+├── CHANGELOG.md                    # 变更日志
 ├── README.md                       # 项目说明
 ├── pyproject.toml                  # 项目配置
 └── LICENSE                         # 许可证

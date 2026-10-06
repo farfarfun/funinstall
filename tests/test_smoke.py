@@ -205,7 +205,7 @@ def test_go_install_linux_skips_when_already_installed():
     installer = GoInstall()
     with (
         patch.object(installer, "is_installed", return_value=True),
-        patch("funinstall.install.go.run_shell") as mock_run_shell,
+        patch("funinstall.install.go.run_shell", return_value="0") as mock_run_shell,
         patch("funinstall.install.go.run_script_from_url") as mock_run_script,
     ):
         assert installer.install_linux() is True
@@ -232,7 +232,7 @@ def test_go_install_windows_mocks_shell():
     with (
         patch.object(installer, "is_installed", return_value=False),
         patch("funinstall.install.go.platform.machine", return_value="x86_64"),
-        patch("funinstall.install.go.run_shell") as mock_run_shell,
+        patch("funinstall.install.go.run_shell", return_value="0") as mock_run_shell,
     ):
         assert installer.install_windows() is True
     assert mock_run_shell.call_count == 3  # 下载 + 静默安装 + 清理
@@ -248,6 +248,17 @@ def test_funinstall_install_cli_nonzero_exit_on_install_failure():
     ):
         result = runner.invoke(install_app, ["go"])
     assert result.exit_code != 0
+
+
+def test_shell_command_failure_raises_instead_of_reporting_success():
+    """funshell 以字符串返回退出码时，非零结果必须中断安装流程。"""
+    from funinstall.install.utils import ShellCommandError, ensure_command_succeeds
+
+    try:
+        ensure_command_succeeds("1", "false")
+        raise AssertionError("非零退出码应抛出 ShellCommandError")
+    except ShellCommandError as e:
+        assert "false" in str(e)
 
 
 def test_nodejs_install_linux_skips_when_already_installed():
@@ -291,7 +302,7 @@ def test_ossutil_download_failure_returns_false():
         patch.object(installer, "is_installed", return_value=False),
         patch("funinstall.install.ossutil.platform.machine", return_value="x86_64"),
         patch("funinstall.install.ossutil.download", return_value=False),
-        patch("funinstall.install.ossutil.run_shell") as mock_run_shell,
+        patch("funinstall.install.ossutil.run_shell", return_value="0") as mock_run_shell,
     ):
         assert installer.install_linux() is False
     # 仅执行了 mkdir -p，没有继续 unzip/mv/rm
@@ -307,7 +318,7 @@ def test_ossutil_install_windows_mocks_shell():
         patch.object(installer, "is_installed", return_value=False),
         patch("funinstall.install.ossutil.platform.machine", return_value="x86_64"),
         patch("funinstall.install.ossutil.os.makedirs"),
-        patch("funinstall.install.ossutil.run_shell") as mock_run_shell,
+        patch("funinstall.install.ossutil.run_shell", return_value="0") as mock_run_shell,
     ):
         assert installer.install_windows() is True
     assert mock_run_shell.call_count == 5  # 下载/解压/移动/两次清理
@@ -335,7 +346,7 @@ def test_uif_install_linux_is_mocked():
 
     with (
         patch("funinstall.install.uif.run_script_from_url") as mock_run_script,
-        patch("funinstall.install.uif.run_shell") as mock_run_shell,
+        patch("funinstall.install.uif.run_shell", return_value="0") as mock_run_shell,
     ):
         assert UIFInstall().install_linux() is True
     mock_run_script.assert_called_once()
@@ -345,7 +356,7 @@ def test_uif_install_linux_is_mocked():
 def test_v2raya_install_linux_is_mocked():
     from funinstall.install.v2raya import V2RayAInstall
 
-    with patch("funinstall.install.v2raya.run_shell") as mock_run_shell:
+    with patch("funinstall.install.v2raya.run_shell", return_value="0") as mock_run_shell:
         assert V2RayAInstall().install_linux() is True
     assert mock_run_shell.called
 
@@ -381,7 +392,7 @@ def test_onehub_install_linux_mocks_network_and_shell(tmp_path, monkeypatch):
             onehub, "get_download_url", return_value={"one-api": "http://fake/one-api"}
         ),
         patch("funinstall.install.onehub.download", return_value=True) as mock_download,
-        patch("funinstall.install.onehub.run_shell_list") as mock_run_shell_list,
+        patch("funinstall.install.onehub.run_shell_list", return_value="0") as mock_run_shell_list,
     ):
         assert onehub.install_linux() is True
     mock_download.assert_called_once()
@@ -410,7 +421,7 @@ def test_mcphub_install_linux_mocks_shell(tmp_path, monkeypatch):
     from funinstall.install.mcphub import FunMcpHub
 
     mcphub = FunMcpHub()
-    with patch("funinstall.install.mcphub.run_shell_list") as mock_run_shell_list:
+    with patch("funinstall.install.mcphub.run_shell_list", return_value="0") as mock_run_shell_list:
         assert mcphub.install_linux() is True
     mock_run_shell_list.assert_called_once_with(["npm install -g @samanhappy/mcphub"])
 
@@ -424,7 +435,7 @@ def test_newapi_install_linux_mocks_network_and_shell(tmp_path, monkeypatch):
     with (
         patch.object(newapi, "get_download_url", return_value=fake_assets),
         patch("funinstall.install.newapi.download", return_value=True) as mock_download,
-        patch("funinstall.install.newapi.run_shell_list") as mock_run_shell_list,
+        patch("funinstall.install.newapi.run_shell_list", return_value="0") as mock_run_shell_list,
     ):
         assert newapi.install_linux() is True
     mock_download.assert_called_once()

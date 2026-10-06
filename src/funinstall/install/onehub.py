@@ -14,6 +14,8 @@ from funget import download
 from funserver.servers.base import BaseServer, server_parser
 from funshell import run_shell_list
 
+from .utils import ensure_command_succeeds
+
 logger = getLogger("funinstall")
 
 
@@ -92,7 +94,8 @@ class FunOneHub(BaseServer):
         if not download(url=download_url, filepath=output_path, overwrite=True):
             logger.error(f"下载 OneHub 失败: {download_url}")
             return False
-        run_shell_list([f"chmod u+x {output_path}"])
+        command = f"chmod u+x {output_path}"
+        ensure_command_succeeds(run_shell_list([command]), command)
         logger.success(f"成功安装 OneHub 到 {root}")
         return True
 
