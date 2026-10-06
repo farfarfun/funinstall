@@ -15,6 +15,16 @@ class ScriptDownloadError(RuntimeError):
     """远程安装脚本下载失败时抛出。"""
 
 
+class ShellCommandError(RuntimeError):
+    """Shell 命令返回非零退出码时抛出。"""
+
+
+def ensure_command_succeeds(exit_code: str, command: str) -> None:
+    """校验 ``funshell`` 的退出码，失败时阻止调用方误报成功。"""
+    if exit_code != "0":
+        raise ShellCommandError(f"命令执行失败（退出码 {exit_code}）: {command}")
+
+
 def run_script_from_url(
     url: str,
     script_name: str = "funinstall_tmp.sh",
@@ -46,15 +56,21 @@ def run_script_from_url(
             raise ScriptDownloadError(f"下载脚本失败: {url}")
 
         if chmod:
-            run_shell(f"chmod +x {script_path}")
+            chmod_cmd = f"chmod +x {script_path}"
+            try:
+                ensure_command_succeeds(run_shell(chmod_cmd), chmod_cmd)
+            except ShellCommandError as e:
+                raise ScriptDownloadError(str(e)) from e
         prefix = "sudo " if sudo else ""
         cmd = f"{prefix}bash {script_path}"
         if args:
             cmd += f" {args}"
         logger.info(f"执行脚本: {cmd}")
         exit_code = run_shell(cmd)
-        if exit_code != "0":
-            raise ScriptDownloadError(f"脚本执行失败（退出码 {exit_code}）: {cmd}")
+        try:
+            ensure_command_succeeds(exit_code, cmd)
+        except ShellCommandError as e:
+            raise ScriptDownloadError(str(e)) from e
     finally:
         logger.debug(f"清理临时目录 {tmp_dir}")
         shutil.rmtree(tmp_dir, ignore_errors=True)

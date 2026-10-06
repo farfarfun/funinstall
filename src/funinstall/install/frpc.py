@@ -16,11 +16,13 @@ logger = getLogger("funinstall")
 class FrpcInstall(BaseInstall):
     """frpc 安装器，支持 Linux 平台的安装与卸载。"""
 
-    def __init__(self, version: str = "", *args, **kwargs):
+    def __init__(
+        self, version: str = "", *args: object, **kwargs: object
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.version = version
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """通过一键脚本在 Linux 上安装 frpc。"""
         logger.info("开始在 Linux 上安装 frpc")
         run_script_from_url(
@@ -31,7 +33,7 @@ class FrpcInstall(BaseInstall):
         logger.success("成功安装 frpc")
         return True
 
-    def uninstall_linux(self, *args, **kwargs) -> bool:
+    def uninstall_linux(self, *args: object, **kwargs: object) -> bool:
         """通过一键脚本在 Linux 上卸载 frpc。"""
         logger.info("开始卸载 frpc")
         run_script_from_url(

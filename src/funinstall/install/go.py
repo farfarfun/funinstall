@@ -12,7 +12,7 @@ from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
 from farlog import getLogger
 
-from .utils import check_command, run_script_from_url
+from .utils import check_command, ensure_command_succeeds, run_script_from_url
 
 logger = getLogger("funinstall")
 
@@ -44,7 +44,8 @@ class GoInstall(BaseInstall):
             logger.info(_SKIP_MSG)
             return True
         logger.info("通过 brew 安装 Go")
-        run_shell("brew install go")
+        command = "brew install go"
+        ensure_command_succeeds(run_shell(command), command)
         logger.success("成功在 macOS 上安装 Go")
         return True
 
@@ -62,7 +63,8 @@ class GoInstall(BaseInstall):
             args=version_args,
         )
         logger.info("创建符号链接 /usr/local/bin/go -> /usr/local/go/bin/go")
-        run_shell("sudo ln -fs /usr/local/go/bin/go /usr/local/bin/go")
+        command = "sudo ln -fs /usr/local/go/bin/go /usr/local/bin/go"
+        ensure_command_succeeds(run_shell(command), command)
         logger.success(
             f"成功在 Linux 上安装 Go{' ' + self.version if self.version else ''}"
         )
@@ -99,7 +101,7 @@ class GoInstall(BaseInstall):
                 f"powershell -Command \"Start-Process msiexec.exe -Wait -ArgumentList '/i {install_dir}\\{filename} /quiet'\"",
                 f'powershell -Command "Remove-Item {install_dir}\\{filename}"',
             ]:
-                run_shell(cmd)
+                ensure_command_succeeds(run_shell(cmd), cmd)
 
             logger.success(f"成功安装 Go {version}")
             logger.info("请重新打开命令行窗口以使环境变量生效")

@@ -28,13 +28,13 @@ uv tool install funinstall
 | **开发环境** | Go 语言 | `funinstall install go` | Go 语言开发环境 | ✅ | ✅ | ✅ |
 | | NodeJS | `funinstall install nodejs` | NodeJS 开发环境 | ✅ | ✅ | ✅ |
 | | Homebrew | `funinstall install brew` | macOS 包管理器 | ✅ | ❌ | ❌ |
-| **开发工具** | Code Server | `funinstall install code-server` | 基于 Web 的 VS Code 服务器 | ✅ | ✅ | ❌ |
+| **开发工具** | Code Server | `funinstall install code-server` | 基于 Web 的 VS Code 服务器 | ❌ | ✅ | ❌ |
 | | OSS工具 | `funinstall install ossutil` | 阿里云对象存储命令行工具 | ✅ | ✅ | ✅ |
 | **网络工具** | V2rayA | `funinstall install v2raya` | 网络代理工具 | ✅ | ✅ | ❌ |
-| | FRP客户端 | `funinstall install frpc` | 内网穿透工具 | ✅ | ✅ | ❌ |
+| | FRP客户端 | `funinstall install frpc` | 内网穿透工具 | ❌ | ✅ | ❌ |
 | **API管理** | New API | `funinstall install new-api` | 接口管理工具 | ✅ | ✅ | ✅ |
 | | OneHub | `funinstall install onehub` | API 网关工具 | ✅ | ✅ | ✅ |
-| **其他工具** | UIF | `funinstall install uif` | 通用工具 | ✅ | ✅ | ❌ |
+| **其他工具** | UIF | `funinstall install uif` | 通用工具 | ❌ | ✅ | ❌ |
 
 ### 使用示例
 
@@ -60,7 +60,7 @@ funinstall install --help
 
 ### 依赖项
 
-- Python >= 3.10
+- Python >= 3.12
 - funserver >= 1.0.59
 - funshell >= 1.0.5
 - farlog >= 1.1.7

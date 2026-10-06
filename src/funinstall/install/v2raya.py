@@ -9,6 +9,8 @@ from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
 from farlog import getLogger
 
+from .utils import ensure_command_succeeds
+
 logger = getLogger("funinstall")
 
 
@@ -38,11 +40,14 @@ class V2RayAInstall(BaseInstall):
         """通过 Homebrew 在 macOS 上安装 v2rayA 并启动服务。"""
         logger.info("开始在 macOS 上安装 v2rayA")
         logger.info("添加 v2rayA 的 Homebrew Tap")
-        run_shell("brew tap v2raya/v2raya")
+        command = "brew tap v2raya/v2raya"
+        ensure_command_succeeds(run_shell(command), command)
         logger.info("通过 brew 安装 v2rayA")
-        run_shell("brew install v2raya/v2raya/v2raya")
+        command = "brew install v2raya/v2raya/v2raya"
+        ensure_command_succeeds(run_shell(command), command)
         logger.info("启动 v2rayA 服务")
-        run_shell("brew services start v2raya")
+        command = "brew services start v2raya"
+        ensure_command_succeeds(run_shell(command), command)
         logger.success("成功在 macOS 上安装 v2rayA")
         return True
 
@@ -50,19 +55,23 @@ class V2RayAInstall(BaseInstall):
         """通过 apt 在 Debian/Ubuntu 上安装 v2rayA 并配置开机自启动。"""
         logger.info("开始在 Linux 上安装 v2rayA")
         logger.info("添加 v2rayA 的 GPG 公钥和 APT 源")
-        run_shell(
-            "wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/keyrings/v2raya.asc"
-        )
-        run_shell(
-            'echo "deb [signed-by=/etc/apt/keyrings/v2raya.asc] https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list'
-        )
+        commands = [
+            "wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/keyrings/v2raya.asc",
+            'echo "deb [signed-by=/etc/apt/keyrings/v2raya.asc] https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list',
+        ]
+        for command in commands:
+            ensure_command_succeeds(run_shell(command), command)
         logger.info("更新 APT 索引")
-        run_shell("sudo apt update")
+        command = "sudo apt update"
+        ensure_command_succeeds(run_shell(command), command)
         logger.info("安装 v2raya 和 v2ray 核心")
-        run_shell("sudo apt install v2raya v2ray")
+        command = "sudo apt install v2raya v2ray"
+        ensure_command_succeeds(run_shell(command), command)
         logger.info("设置 v2rayA 开机自启动")
-        run_shell("sudo systemctl enable v2raya.service")
+        command = "sudo systemctl enable v2raya.service"
+        ensure_command_succeeds(run_shell(command), command)
         logger.info("启动 v2rayA 服务")
-        run_shell("sudo systemctl start v2raya.service")
+        command = "sudo systemctl start v2raya.service"
+        ensure_command_succeeds(run_shell(command), command)
         logger.success("成功在 Linux 上安装 v2rayA")
         return True

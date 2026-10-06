@@ -17,13 +17,13 @@ class BaseInstall:
     def install(self) -> bool:
         """根据当前系统自动选择安装方法"""
         
-    def install_macos(self, *args, **kwargs) -> bool:
+    def install_macos(self, *args: object, **kwargs: object) -> bool:
         """macOS 系统安装方法"""
         
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """Linux 系统安装方法"""
         
-    def install_windows(self, *args, **kwargs) -> bool:
+    def install_windows(self, *args: object, **kwargs: object) -> bool:
         """Windows 系统安装方法"""
 ```
 
@@ -38,7 +38,8 @@ Go 语言开发环境安装类。
 **类定义**
 ```python
 class GoInstall(BaseInstall):
-    def __init__(self, version: str = "", force=False, *args, **kwargs)
+    def __init__(self, version: str = "", force: bool = False,
+                 *args: object, **kwargs: object) -> None
 ```
 
 **参数说明**
@@ -75,12 +76,14 @@ NodeJS 开发环境安装类。
 **类定义**
 ```python
 class NodeJSInstall(BaseInstall):
-    def __init__(self, version=None, lasted=False, update=False, force=False, *args, **kwargs)
+    def __init__(self, version: str | None = None, lasted: bool = False,
+                 update: bool = False, force: bool = False,
+                 *args: object, **kwargs: object) -> None
 ```
 
 **参数说明**
 - `version` (str): 指定安装的NodeJS版本
-- `lasted` (bool): 是否安装最新版本
+- `lasted` (bool): 是否安装最新版本；CLI 选项为 `--latest`
 - `update` (bool): 是否更新当前版本
 - `force` (bool): 是否强制重新安装
 
@@ -116,7 +119,8 @@ installer.install()
 **类定义**
 ```python
 class OSSUtilInstall(BaseInstall):
-    def __init__(self, version="2.1.2", force=False, *args, **kwargs)
+    def __init__(self, version: str = "2.1.2", force: bool = False,
+                 *args: object, **kwargs: object) -> None
 ```
 
 **参数说明**
@@ -179,7 +183,8 @@ V2rayA 网络代理工具安装类。
 **类定义**
 ```python
 class V2RayAInstall(BaseInstall):
-    def __init__(self, version=None, lasted=False, update=False, *args, **kwargs)
+    def __init__(self, version: str | None = None, lasted: bool = False,
+                 update: bool = False, *args: object, **kwargs: object) -> None
 ```
 
 #### FrpcInstall
@@ -189,19 +194,19 @@ FRP客户端安装类。
 **类定义**
 ```python
 class FrpcInstall(BaseInstall):
-    def __init__(self, *args, **kwargs)
+    def __init__(self, version: str = "", *args: object, **kwargs: object) -> None
 ```
 
 ### API管理工具
 
-#### NewApiInstall
+#### FunNewApi
 
 New API 接口管理工具安装类。
 
 **类定义**
 ```python
-class NewApiInstall(BaseInstall):
-    def __init__(self, overwrite=False, *args, **kwargs)
+class FunNewApi(BaseServer):
+    def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None
 ```
 
 #### FunOneHub
@@ -211,7 +216,7 @@ OneHub API 网关工具安装类。
 **类定义**
 ```python
 class FunOneHub(BaseServer):
-    def __init__(self, overwrite: bool = False, *args, **kwargs)
+    def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None
 ```
 
 ## 通用模式

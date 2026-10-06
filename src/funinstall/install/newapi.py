@@ -15,6 +15,8 @@ from funget import download
 from funserver.servers.base import BaseServer, server_parser
 from funshell import run_shell_list
 
+from .utils import ensure_command_succeeds
+
 logger = getLogger("funinstall")
 
 
@@ -139,7 +141,8 @@ class FunNewApi(BaseServer):
             logger.error(f"下载 new-api 失败: {download_url}")
             return False
         if output_name != "new-api.exe":
-            run_shell_list([f"chmod u+x {output_path}"])
+            command = f"chmod u+x {output_path}"
+            ensure_command_succeeds(run_shell_list([command]), command)
         logger.success(f"成功安装 new-api 到 {root}")
         return True
 

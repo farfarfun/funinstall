@@ -8,7 +8,7 @@ from funshell import run_shell
 from funserver.servers.base.install import BaseInstall
 from farlog import getLogger
 
-from .utils import run_script_from_url
+from .utils import ensure_command_succeeds, run_script_from_url
 
 logger = getLogger("funinstall")
 
@@ -16,7 +16,7 @@ logger = getLogger("funinstall")
 class UIFInstall(BaseInstall):
     """UIF 安装器，通过官方脚本在 Linux 上安装并配置 systemd 服务。"""
 
-    def install_linux(self, *args, **kwargs) -> bool:
+    def install_linux(self, *args: object, **kwargs: object) -> bool:
         """在 Linux 上安装 UIF 并设置开机自启动。"""
         logger.info("开始在 Linux 上安装 UIF")
         run_script_from_url(
@@ -25,8 +25,10 @@ class UIFInstall(BaseInstall):
             chmod=True,
         )
         logger.info("设置 ui4freedom 开机自启动")
-        run_shell("sudo systemctl enable ui4freedom")
+        command = "sudo systemctl enable ui4freedom"
+        ensure_command_succeeds(run_shell(command), command)
         logger.info("启动 ui4freedom 服务")
-        run_shell("sudo systemctl restart ui4freedom")
+        command = "sudo systemctl restart ui4freedom"
+        ensure_command_succeeds(run_shell(command), command)
         logger.success("成功安装 UIF")
         return True
