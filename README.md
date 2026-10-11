@@ -34,6 +34,7 @@ uv tool install funinstall
 | | FRP客户端 | `funinstall install frpc` | 内网穿透工具 | ❌ | ✅ | ❌ |
 | **API管理** | New API | `funinstall install new-api` | 接口管理工具 | ✅ | ✅ | ✅ |
 | | OneHub | `funinstall install onehub` | API 网关工具 | ✅ | ✅ | ✅ |
+| | MCP Hub | `funinstall install mcphub` | MCP 服务管理工具 | ✅ | ✅ | ❌ |
 | **其他工具** | UIF | `funinstall install uif` | 通用工具 | ❌ | ✅ | ❌ |
 
 ### 使用示例
@@ -56,6 +57,27 @@ funinstall --help
 funinstall install --help
 ```
 
+## 服务管理
+
+OneHub、New API 和 MCP Hub 由 `scripts/setup.sh` 管理。开发当前工作树时使用
+`install-dev`，发布包使用 `install-prod`（可选版本）：
+
+```bash
+scripts/setup.sh install-dev
+scripts/setup.sh install-prod 2.0.0
+
+scripts/setup.sh install onehub
+scripts/setup.sh start onehub
+scripts/setup.sh status onehub
+scripts/setup.sh restart onehub
+scripts/setup.sh stop onehub
+scripts/setup.sh run onehub
+scripts/setup.sh uninstall onehub
+```
+
+将示例中的 `onehub` 替换为 `newapi` 或 `mcphub` 即可管理相应服务。`start` 在后台运行，
+`run` 保持前台；运行状态、PID 和日志保存在用户状态目录下各服务的 `.run/` 中。
+
 ## 开发
 
 ### 依赖项
@@ -65,6 +87,11 @@ funinstall install --help
 - funshell >= 1.0.5
 - farlog >= 1.1.7
 - requests >= 2.31.0
+- typer >= 0.15.3
+- funget >= 1.1.69
+
+项目依赖由 `uv sync`（开发）或包安装器（使用）按 `pyproject.toml` 自动安装。Python 3.12
+是最低版本，因为直接依赖 `funget` 仅支持该版本及以上。
 
 ### 贡献
 

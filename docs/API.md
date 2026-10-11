@@ -197,6 +197,15 @@ class FrpcInstall(BaseInstall):
     def __init__(self, version: str = "", *args: object, **kwargs: object) -> None
 ```
 
+#### UIFInstall
+
+UI for Freedom 代理工具安装类，仅支持 Linux。
+
+```python
+class UIFInstall(BaseInstall):
+    def install_linux(self, *args: object, **kwargs: object) -> bool
+```
+
 ### API管理工具
 
 #### FunNewApi
@@ -218,6 +227,19 @@ OneHub API 网关工具安装类。
 class FunOneHub(BaseServer):
     def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None
 ```
+
+#### FunMcpHub
+
+MCP Hub 服务安装和管理类。
+
+```python
+class FunMcpHub(BaseServer):
+    def __init__(self, overwrite: bool = False, *args: object, **kwargs: object) -> None
+```
+
+服务 CLI `funonehub`、`funnewapi` 和 `funmcphub` 通过 `scripts/setup.sh` 管理；
+使用 `scripts/setup.sh <action> <service>`，其中 `action` 为 `install`、`start`、
+`run`、`stop`、`restart`、`status`、`uninstall` 或 `update`。
 
 ## 通用模式
 
@@ -283,27 +305,24 @@ logger.warning("检测到潜在问题")
 import os
 import platform
 
-from funshell import run_shell
+from funinstall.install.utils import check_command
 from funserver.servers.base.install import BaseInstall
 from farlog import getLogger
 
 logger = getLogger("funinstall")
 
 class NewToolInstall(BaseInstall):
-    def __init__(self, version=None, force=False, *args, **kwargs):
+    def __init__(self, version: str | None = None, force: bool = False, *args: object, **kwargs: object) -> None:
         super().__init__(*args, **kwargs)
         self.version = version
         self.force = force
 
     def is_installed(self) -> bool:
         """检查工具是否已安装"""
-        try:
-            run_shell("newtool --version")
+        if check_command("newtool --version", "NewTool"):
             logger.info("检测到系统中已安装 NewTool")
             return True
-        except Exception as e:
-            logger.debug(f"未检测到 NewTool，探测命令执行失败: {e}")
-            return False
+        return False
 
     def install_macos(self, *args, **kwargs) -> bool:
         if not self.force and self.is_installed():

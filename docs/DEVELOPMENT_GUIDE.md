@@ -43,12 +43,17 @@ funinstall/
 │           ├── code_server.py      # Code Server安装
 │           ├── frpc.py             # FRP客户端安装
 │           ├── go.py               # Go语言安装
+│           ├── mcphub.py           # MCP Hub服务安装与管理
 │           ├── newapi.py           # New API安装
 │           ├── nodejs.py           # NodeJS安装
 │           ├── onehub.py           # OneHub安装
 │           ├── ossutil.py          # OSS工具安装
 │           ├── uif.py              # UIF工具安装
-│           └── v2raya.py           # V2rayA安装
+│           ├── v2raya.py           # V2rayA安装
+│           └── funjupyter/         # JupyterLab内部服务实现（未注册脚本入口）
+├── scripts/
+│   ├── setup.sh                    # 包安装和服务生命周期分发
+│   └── services/                   # OneHub、New API、MCP Hub服务脚本
 ├── docs/                           # 文档目录
 │   ├── API.md                      # API文档
 │   └── DEVELOPMENT_GUIDE.md        # 开发指南
@@ -241,12 +246,12 @@ class TestGoInstall(unittest.TestCase):
     
     @patch('funinstall.install.go.run_shell')
     def test_is_installed_true(self, mock_run_shell):
-        mock_run_shell.return_value = "go version go1.21.0"
+        mock_run_shell.return_value = "0"
         self.assertTrue(self.installer.is_installed())
     
     @patch('funinstall.install.go.run_shell')
     def test_is_installed_false(self, mock_run_shell):
-        mock_run_shell.side_effect = Exception("command not found")
+        mock_run_shell.return_value = "127"
         self.assertFalse(self.installer.is_installed())
 ```
 
